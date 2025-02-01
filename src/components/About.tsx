@@ -2,12 +2,23 @@ import React from "react";
 
 const About = () => {
   return (
-    <section className="p-8">
+    <section id="about-section" className="p-8">
       <h2 className="text-3xl font-bold mb-4">About</h2>
+
+      {/* Image of yourself */}
+      <div className="flex justify-center mb-4">
+        <img
+          src="MiguelJLopez.jpg" // Replace with the actual path to your image
+          alt="Miguel Lopez"
+          className="w-32 h-32 full object-cover"
+        />
+      </div>
+
       <h3 className="text-3xl font-bold mb-4 text-center">Miguel Lopez</h3>
       <h4 className="text-3xl font-bold mb-4 text-center">
         Computer Science Graduate
       </h4>
+
       <div className="space-y-6 max-w-3xl mx-auto">
         <p className="px-16">
           Hi, I’m Miguel Lopez, a recent Computer Science graduate from

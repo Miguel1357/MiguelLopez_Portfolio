@@ -58,7 +58,15 @@ const Home: React.FC = () => {
           {showCV ? "Close CV" : "View CV"}
         </button>
 
-        <button className="px-6 py-2 bg-cyan-500 text-white font-semibold rounded-lg shadow-md hover:bg-cyan-600 transition-all duration-300">
+        <button
+          className="px-6 py-2 bg-cyan-500 text-white font-semibold rounded-lg shadow-md hover:bg-cyan-600 transition-all duration-300"
+          onClick={() => {
+            const contactSection = document.getElementById("contact-section");
+            if (contactSection) {
+              contactSection.scrollIntoView({ behavior: "smooth" });
+            }
+          }}
+        >
           Contact Me
         </button>
       </div>

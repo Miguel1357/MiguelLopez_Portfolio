@@ -1,4 +1,3 @@
-// Navbar.tsx
 import React, { useState, useEffect } from "react";
 
 const Navbar: React.FC = () => {
@@ -8,18 +7,20 @@ const Navbar: React.FC = () => {
     const handleScroll = () => {
       const homeHeight =
         document.getElementById("home-section")?.offsetHeight || 0;
-      const scrollPosition = window.scrollY;
-
-      if (scrollPosition >= homeHeight) {
-        setNavbarAtTop(true);
-      } else {
-        setNavbarAtTop(false);
-      }
+      setNavbarAtTop(window.scrollY >= homeHeight);
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Function to smoothly scroll to sections
+  const scrollToSection = (id: string) => {
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <nav
@@ -27,7 +28,18 @@ const Navbar: React.FC = () => {
         navbarAtTop ? "fixed top-0 left-0 shadow-lg z-50" : "relative mt-6"
       }`}
     >
-      Navigation Bar
+      <ul className="flex justify-center space-x-6">
+        {["home", "about", "projects", "skills", "contact"].map((section) => (
+          <li key={section}>
+            <button
+              onClick={() => scrollToSection(`${section}-section`)}
+              className="px-4 py-2 rounded-md transition-colors duration-200 hover:bg-yellow-600"
+            >
+              {section.charAt(0).toUpperCase() + section.slice(1)}
+            </button>
+          </li>
+        ))}
+      </ul>
     </nav>
   );
 };
