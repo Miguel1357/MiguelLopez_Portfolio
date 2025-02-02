@@ -1,57 +1,67 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+const titles = ["Software Engineer", "Web Dev", "App Dev", "Game Dev"];
 
 const Home: React.FC = () => {
   const [showCV, setShowCV] = useState<boolean>(false);
+  const [currentTitleIndex, setCurrentTitleIndex] = useState(0);
+  const [displayedText, setDisplayedText] = useState("");
+  const [typing, setTyping] = useState(true);
+
+  useEffect(() => {
+    let timeout: number;
+    const currentTitle = titles[currentTitleIndex];
+    const textLength = displayedText.length;
+
+    if (typing) {
+      if (textLength < currentTitle.length) {
+        timeout = setTimeout(() => {
+          setDisplayedText(currentTitle.substring(0, textLength + 1));
+        }, 100);
+      } else {
+        setTimeout(() => setTyping(false), 1000);
+      }
+    } else {
+      if (textLength > 0) {
+        timeout = setTimeout(() => {
+          setDisplayedText(currentTitle.substring(0, textLength - 1));
+        }, 50);
+      } else {
+        setTyping(true);
+        setCurrentTitleIndex((prev) => (prev + 1) % titles.length);
+      }
+    }
+
+    return () => clearTimeout(timeout);
+  }, [displayedText, typing, currentTitleIndex]);
 
   return (
     <section
       id="home-section"
-      className="relative h-screen flex flex-col justify-center items-center bg-gray-900 text-white overflow-hidden"
+      className="relative h-screen flex flex-col justify-center items-center text-white overflow-hidden"
     >
-      {/* Animated Background */}
-      <div className="absolute top-0 left-0 w-full h-full z-0">
-        <svg
-          className="absolute w-full h-full animate-waves"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1440 320"
-        >
-          <defs>
-            <linearGradient
-              id="waveGradient"
-              x1="0%"
-              y1="0%"
-              x2="100%"
-              y2="100%"
-            >
-              <stop offset="0%" stopColor="#ffffff0f" />
-              <stop offset="100%" stopColor="#ffffff04" />
-            </linearGradient>
-          </defs>
-          <path
-            fill="url(#waveGradient)"
-            fillOpacity="1"
-            d="M0,160L60,154.7C120,149,240,139,360,160C480,181,600,235,720,234.7C840,235,960,181,1080,160C1200,139,1320,149,1380,154.7L1440,160V320H1380C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320H0Z"
-          />
-        </svg>
-      </div>
-
-      {/* Foreground Content */}
-      <p className="text-center z-10">Greetings! I am</p>
+      <p className="text-center text-[var(--gray-text)] z-10">
+        Greetings! I am
+      </p>
       <header>
-        <h1 className="text-4xl font-bold text-center z-10">Miguel Lopez</h1>
+        <h1 className="text-6xl font-bold text-center z-10 mt-3">
+          Miguel Lopez
+        </h1>
       </header>
-      <p className="text-center z-10">
-        <strong>Web dev</strong> seeking to <strong>innovate</strong> and{" "}
-        <strong>redefine.</strong>
+      <p className="text-center text-[var(--gray-text)] z-10 mt-6">
+        <strong className="text-white">{displayedText}</strong>
+        <span className="blinking-cursor">|</span> {/* The blinking cursor */}
+        seeking to <strong className="text-white">innovate</strong> and{" "}
+        <strong className="text-white">redefine</strong>.
       </p>
 
       {/* Buttons */}
-      <div className="flex space-x-4 mt-6 z-10">
+      <div className="flex space-x-4 mt-25 z-10">
         <button
           className={`px-6 py-2 font-semibold rounded-lg shadow-md transition-all duration-300 ${
             showCV
-              ? "bg-red-500 text-white hover:bg-red-600"
-              : "bg-white text-cyan-500 hover:bg-gray-100"
+              ? "bg-red-500 text-white hover:bg-red-600 hover:text-gray-200"
+              : "bg-white text-[var(--custom-cyan)] hover:bg-[var(--hover-white)] hover:text-[var(--hover-cyan)]"
           }`}
           onClick={() => setShowCV((prev) => !prev)}
         >
@@ -59,7 +69,7 @@ const Home: React.FC = () => {
         </button>
 
         <button
-          className="px-6 py-2 bg-cyan-500 text-white font-semibold rounded-lg shadow-md hover:bg-cyan-600 transition-all duration-300"
+          className="px-6 py-2 bg-[var(--custom-cyan)] text-white font-semibold rounded-lg shadow-md hover:bg-[var(--hover-cyan)] transition-all duration-300"
           onClick={() => {
             const contactSection = document.getElementById("contact-section");
             if (contactSection) {
@@ -86,16 +96,39 @@ const Home: React.FC = () => {
         />
       </div>
 
-      {/* Tailwind Animation */}
+      <div className="flex space-x-4 mt-6 z-10">
+        {/* LinkedIn Button */}
+        <a
+          href="https://www.linkedin.com/in/migueljlopez02/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-center w-16 h-16 border-2 border-white text-white font-bold text-2xl lowercase transition-all duration-300 hover:bg-white hover:text-black"
+        >
+          in
+        </a>
+
+        {/* GitHub Button */}
+        <a
+          href="https://github.com/Miguel1357"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-center w-16 h-16 border-2 border-white text-white font-bold text-2xl lowercase transition-all duration-300 hover:bg-white hover:text-black"
+        >
+          git
+        </a>
+      </div>
+
+      {/* Tailwind Animations */}
       <style>
         {`
-          @keyframes waveMotion {
-            0% { transform: translateX(0px); }
-            50% { transform: translateX(20px); }
-            100% { transform: translateX(0px); }
+          @keyframes blink {
+            50% { opacity: 0; }
           }
-          .animate-waves {
-            animation: waveMotion 6s infinite ease-in-out;
+          .blinking-cursor {
+            display: inline-block;
+            font-weight: bold;
+            color: white;
+            animation: blink 1s infinite;
           }
         `}
       </style>
