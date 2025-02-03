@@ -1,9 +1,38 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-// Project Image (Replace with actual import)
-import camelProjectImage from "../assets/camel_project.png";
+// Project Images (replace with actual imports)
+import image1 from "../assets/project_images/camel1.png";
+import image2 from "../assets/project_images/camel2.png";
+import image3 from "../assets/project_images/camel3.png";
+import image4 from "../assets/project_images/camel4.png";
+import image5 from "../assets/project_images/camel5.png";
 
 const Projects = () => {
+  // Set up state for image cycle
+  const [currentImage, setCurrentImage] = useState(0);
+
+  // Array of images
+  const images = [image1, image2, image3, image4, image5];
+
+  // Cycle through images every 3 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % images.length);
+    }, 3000); // Change image every 3 seconds
+
+    return () => clearInterval(interval); // Cleanup the interval
+  }, [images.length]);
+
+  // Function to go to the next image
+  const nextImage = () => {
+    setCurrentImage((prev) => (prev + 1) % images.length);
+  };
+
+  // Function to go to the previous image
+  const prevImage = () => {
+    setCurrentImage((prev) => (prev - 1 + images.length) % images.length);
+  };
+
   return (
     <section id="projects-section" className="p-8">
       {/* Section Title */}
@@ -20,17 +49,47 @@ const Projects = () => {
       </h2>
 
       {/* Project Card */}
-      <div className="bg-[var(--custom-gray)] p-6 rounded-lg shadow-lg max-w-xl mx-auto flex flex-col">
+      <div className="bg-[var(--custom-gray)] p-6 rounded-lg shadow-lg max-w-xl mx-auto flex flex-col relative overflow-hidden">
         {/* Project Title */}
         <h3 className="text-3xl font-bold text-white">CAMEL</h3>
 
         {/* Project Image */}
-        <div className="relative mt-4">
-          <img
-            src={camelProjectImage}
-            alt="Camel Project"
-            className="rounded-lg"
-          />
+        <div className="relative mt-4 w-full h-64 overflow-hidden group">
+          {/* Arrows for navigation */}
+          <button
+            onClick={prevImage}
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-3xl z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          >
+            &lt;
+          </button>
+          <button
+            onClick={nextImage}
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-3xl z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          >
+            &gt;
+          </button>
+
+          {/* Image Slider */}
+          <div
+            className="flex w-full h-full transition-transform duration-500 ease-in-out"
+            style={{
+              transform: `translateX(-${currentImage * 100}%)`, // Move the image to the left
+            }}
+          >
+            {images.map((image, index) => (
+              <img
+                key={index}
+                src={image}
+                alt={`Project screenshot ${index}`}
+                className="w-full h-full object-cover rounded-lg"
+              />
+            ))}
+          </div>
+
+          {/* Dark Filter on Hover */}
+          <div className="absolute inset-0 bg-gray-800 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
+
+          {/* Date Label at the bottom-left corner of the image */}
           <span
             className="absolute bottom-2 left-2 bg-[var(--custom-cyan)] text-white px-3 py-1 text-xs font-bold rounded"
             style={{
@@ -68,11 +127,6 @@ const Projects = () => {
               <span
                 key={tech}
                 className="bg-white text-[var(--custom-gray)] px-4 py-2 text-xs font-semibold rounded-full"
-                style={{
-                  backgroundColor: "white",
-                  color: "var(--custom-gray)",
-                  borderRadius: "9999px", // fully rounded
-                }}
               >
                 {tech}
               </span>

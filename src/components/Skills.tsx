@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 
 // Import skill icons
-import pythonIcon from "../assets/python.png";
-import javaIcon from "../assets/java.png";
-import typescriptIcon from "../assets/typescript.png";
-import cssIcon from "../assets/css.png";
-import htmlIcon from "../assets/html.png";
-import rIcon from "../assets/r.png";
-import bashIcon from "../assets/bash.png";
-import csharpIcon from "../assets/csharp.png";
-import cIcon from "../assets/c.png";
-import mysqlIcon from "../assets/mysql.png";
+import pythonIcon from "../assets/skill_icons/python.png";
+import javaIcon from "../assets/skill_icons/java.png";
+import typescriptIcon from "../assets/skill_icons/typescript.png";
+import cssIcon from "../assets/skill_icons/css.png";
+import htmlIcon from "../assets/skill_icons/html.png";
+import rIcon from "../assets/skill_icons/r.png";
+import bashIcon from "../assets/skill_icons/bash.png";
+import csharpIcon from "../assets/skill_icons/csharp.png";
+import cIcon from "../assets/skill_icons/c.png";
+import mysqlIcon from "../assets/skill_icons/mysql.png";
 
 // Define TypeScript interface for skills
 interface Skill {
