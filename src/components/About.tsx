@@ -28,7 +28,7 @@ const About = () => {
       {/* Added mb-2 for space between name and title */}
       <h4 className="font-bold mb-4 text-center">Computer Science Graduate</h4>
       {/* About text */}
-      <div className="space-y-6 max-w-3xl mx-auto">
+      <div className="space-y-6 max-w-2xl mx-auto">
         <p className="px-16">
           Hi, I’m Miguel Lopez, a recent Computer Science graduate from
           California State University, Sacramento. I’m fascinated by technology

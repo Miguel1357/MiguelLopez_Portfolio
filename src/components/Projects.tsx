@@ -49,7 +49,7 @@ const Projects = () => {
       </h2>
 
       {/* Project Card */}
-      <div className="bg-[var(--custom-gray)] p-6 rounded-lg shadow-lg max-w-xl mx-auto flex flex-col relative overflow-hidden">
+      <div className="bg-[var(--custom-gray)] p-6 rounded-lg shadow-lg max-w-[400px] mx-auto flex flex-col relative overflow-hidden">
         {/* Project Title */}
         <h3 className="text-3xl font-bold text-white">CAMEL</h3>
 
@@ -104,7 +104,7 @@ const Projects = () => {
         <div className="mt-4 text-white">
           <p className="text-sm mt-2">
             <span className="block font-semibold mb-1 text-white">
-              [Project Management]
+              [Project Management Website]
             </span>
             An efficient SaaS platform for Project Managers to streamline
             company finances, projects, and tasks. It supports multiple
