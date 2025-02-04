@@ -35,7 +35,7 @@ const Navbar: React.FC = () => {
 
       <nav
         id="navbar"
-        className={`w-full bg-yellow-500 text-black py-4 px-8 text-center font-semibold text-lg transition-all duration-300 rounded-b-2xl ${
+        className={`w-full bg-[#1a1a1a] text-white py-4 px-8 text-center font-semibold text-lg transition-all duration-300 rounded-b-2xl ${
           navbarAtTop ? "fixed top-0 left-0 shadow-lg z-50" : "relative"
         }`}
       >
@@ -47,13 +47,13 @@ const Navbar: React.FC = () => {
           </div>
 
           {/* Right side: Navigation links */}
-          <ul className="flex space-x-4 sm:space-x-2 mt-4 sm:mt-0 w-full sm:w-auto justify-center sm:justify-start">
+          <ul className="flex space-x-4 sm:space-x-1 mt-4 sm:mt-0 w-full sm:w-auto justify-center sm:justify-start">
             {["home", "about", "projects", "skills", "contact"].map(
               (section) => (
                 <li key={section}>
                   <button
                     onClick={() => scrollToSection(`${section}-section`)}
-                    className="px-3 py-2 rounded-md transition-colors duration-200 hover:bg-yellow-600"
+                    className="px-3 py-2 rounded-md transition-colors duration-200 hover:bg-[var(--hover-cyan)]"
                   >
                     {section.charAt(0).toUpperCase() + section.slice(1)}
                   </button>

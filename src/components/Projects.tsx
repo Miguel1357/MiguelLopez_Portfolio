@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 // Project Images (replace with actual imports)
 import image1 from "../assets/project_images/camel1.png";

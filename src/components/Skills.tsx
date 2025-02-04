@@ -13,12 +13,6 @@ import csharpIcon from "../assets/skill_icons/csharp.png";
 import cIcon from "../assets/skill_icons/c.png";
 import mysqlIcon from "../assets/skill_icons/mysql.png";
 
-// Define TypeScript interface for skills
-interface Skill {
-  name: string;
-  icon: string;
-}
-
 const skills = [
   { name: "PYTHON", icon: pythonIcon },
   { name: "JAVA", icon: javaIcon },
@@ -45,8 +39,8 @@ const Skills = () => {
     const { left, top, width, height } = currentTarget.getBoundingClientRect();
 
     // Increase sensitivity so the box moves away more dramatically
-    const x = -((clientX - left) / width - 0.5) * 5000;
-    const y = -((clientY - top) / height - 0.5) * 5000;
+    const x = -((clientX - left) / width - 0.5) * 1000;
+    const y = -((clientY - top) / height - 0.5) * 1000;
 
     setHoverEffect((prev) => ({ ...prev, [skillName]: { x, y } }));
   };
