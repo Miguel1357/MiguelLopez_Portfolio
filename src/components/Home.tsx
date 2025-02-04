@@ -88,7 +88,7 @@ const Home: React.FC = () => {
         }`}
       >
         <iframe
-          src="/MiguelJLopez_Resume.pdf"
+          src="public/MiguelJLopez_Resume.pdf"
           width="100%"
           height="600px"
           className="border-none rounded-lg"

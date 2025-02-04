@@ -118,7 +118,7 @@ const Contact = () => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`mt-4 p-2 px-6 bg-[var(--custom-cyan)] text-white rounded-lg hover:bg-[var(--hover-cyan)] transition-colors ${
+            className={`mt-4 p-2 px-6 bg-[var(--custom-cyan)] text-white font-semibold rounded-lg hover:bg-[var(--hover-cyan)] transition-colors ${
               isSubmitting ? "opacity-50" : ""
             }`}
           >

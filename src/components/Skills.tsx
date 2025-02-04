@@ -38,9 +38,9 @@ const Skills = () => {
     const { clientX, clientY, currentTarget } = e;
     const { left, top, width, height } = currentTarget.getBoundingClientRect();
 
-    // Increase sensitivity so the box moves away more dramatically
-    const x = -((clientX - left) / width - 0.5) * 1000;
-    const y = -((clientY - top) / height - 0.5) * 1000;
+    // Lower movement sensitivity
+    const x = -((clientX - left) / width - 0.5) * 300;
+    const y = -((clientY - top) / height - 0.5) * 300;
 
     setHoverEffect((prev) => ({ ...prev, [skillName]: { x, y } }));
   };
@@ -76,15 +76,11 @@ const Skills = () => {
               .map((skill) => (
                 <motion.div
                   key={skill.name}
-                  className={`flex flex-col items-center bg-[var(--custom-gray)] p-4 rounded-lg shadow-lg w-24 h-24 sm:w-28 sm:h-28 transition-transform ${
-                    hoverEffect[skill.name]?.x || hoverEffect[skill.name]?.y
-                      ? "shadow-lg"
-                      : ""
-                  }`}
+                  className="flex flex-col items-center bg-[var(--custom-gray)] p-4 rounded-lg shadow-lg w-24 h-24 sm:w-28 sm:h-28 transition-transform"
                   style={{
                     boxShadow:
                       hoverEffect[skill.name]?.x || hoverEffect[skill.name]?.y
-                        ? `0 0 15px 5px var(--custom-cyan), 0 0 25px 10px var(--custom-cyan)`
+                        ? `0 0 10px 3px var(--custom-cyan), 0 0 15px 6px var(--custom-cyan)`
                         : "none",
                   }}
                   onMouseMove={(e) => handleMouseMove(e, skill.name)}
@@ -93,7 +89,7 @@ const Skills = () => {
                     x: hoverEffect[skill.name]?.x || 0,
                     y: hoverEffect[skill.name]?.y || 0,
                   }}
-                  transition={{ type: "spring", stiffness: 150, damping: 10 }}
+                  transition={{ type: "spring", stiffness: 100, damping: 15 }}
                 >
                   <img
                     src={skill.icon}

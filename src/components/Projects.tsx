@@ -18,24 +18,13 @@ const Projects = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % images.length);
-    }, 3000); // Change image every 3 seconds
+    }, 3000);
 
-    return () => clearInterval(interval); // Cleanup the interval
+    return () => clearInterval(interval);
   }, [images.length]);
-
-  // Function to go to the next image
-  const nextImage = () => {
-    setCurrentImage((prev) => (prev + 1) % images.length);
-  };
-
-  // Function to go to the previous image
-  const prevImage = () => {
-    setCurrentImage((prev) => (prev - 1 + images.length) % images.length);
-  };
 
   return (
     <section id="projects-section" className="p-8">
-      {/* Section Title */}
       <h2 className="text-3xl font-bold mb-6 relative inline-block">
         Projects
         <span
@@ -48,33 +37,32 @@ const Projects = () => {
         ></span>
       </h2>
 
-      {/* Project Card */}
-      <div className="bg-[var(--custom-gray)] p-6 rounded-lg shadow-lg max-w-[400px] mx-auto flex flex-col relative overflow-hidden">
-        {/* Project Title */}
+      <div className="bg-[var(--custom-gray)] p-6 rounded-lg shadow-lg max-w-[400px] mx-auto flex flex-col relative overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_var(--custom-cyan)] hover:ring-2 hover:ring-[var(--custom-cyan)] hover:ring-opacity-50">
         <h3 className="text-3xl font-bold text-white">CAMEL</h3>
 
-        {/* Project Image */}
         <div className="relative mt-4 w-full h-64 overflow-hidden group">
-          {/* Arrows for navigation */}
           <button
-            onClick={prevImage}
+            onClick={() =>
+              setCurrentImage(
+                (prev) => (prev - 1 + images.length) % images.length
+              )
+            }
             className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-3xl z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
           >
             &lt;
           </button>
           <button
-            onClick={nextImage}
+            onClick={() =>
+              setCurrentImage((prev) => (prev + 1) % images.length)
+            }
             className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-3xl z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
           >
             &gt;
           </button>
 
-          {/* Image Slider */}
           <div
             className="flex w-full h-full transition-transform duration-500 ease-in-out"
-            style={{
-              transform: `translateX(-${currentImage * 100}%)`, // Move the image to the left
-            }}
+            style={{ transform: `translateX(-${currentImage * 100}%)` }}
           >
             {images.map((image, index) => (
               <img
@@ -86,21 +74,12 @@ const Projects = () => {
             ))}
           </div>
 
-          {/* Dark Filter on Hover */}
           <div className="absolute inset-0 bg-gray-800 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
-
-          {/* Date Label at the bottom-left corner of the image */}
-          <span
-            className="absolute bottom-2 left-2 bg-[var(--custom-cyan)] text-white px-3 py-1 text-xs font-bold rounded"
-            style={{
-              backgroundColor: "var(--custom-cyan)",
-            }}
-          >
+          <span className="absolute bottom-2 left-2 bg-[var(--custom-cyan)] text-white px-3 py-1 text-xs font-bold rounded">
             AUG, 2023
           </span>
         </div>
 
-        {/* Project Details */}
         <div className="mt-4 text-white">
           <p className="text-sm mt-2">
             <span className="block font-semibold mb-1 text-white">
@@ -112,7 +91,6 @@ const Projects = () => {
             and effective business management.
           </p>
 
-          {/* Tech Stack */}
           <div className="flex flex-wrap gap-2 mt-4">
             {[
               "TypeScript",
@@ -133,7 +111,6 @@ const Projects = () => {
             ))}
           </div>
 
-          {/* Action Button */}
           <div className="mt-6 flex space-x-4">
             <a
               href="https://github.com/SacOverflow/CAMEL-Services"
