@@ -94,7 +94,6 @@ const Contact: React.FC = () => {
         });
       }
     } catch (error) {
-      console.error("Error sending message:", error);
       setNotification({ message: "Error sending message.", type: "error" });
     } finally {
       setIsSubmitting(false);

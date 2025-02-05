@@ -5,20 +5,25 @@ const Navbar: React.FC = () => {
   const [homeSectionHeight, setHomeSectionHeight] = useState<number>(0);
 
   useEffect(() => {
+    // Set home section height dynamically
     const homeSection = document.getElementById("home-section");
     if (homeSection) {
       setHomeSectionHeight(homeSection.offsetHeight);
     }
 
+    // Detect scroll and toggle visibility based on the scroll position
     const handleScroll = () => {
       if (window.scrollY > homeSectionHeight) {
-        setIsVisible(true);
+        setIsVisible(true); // Show navbar after scrolling past home section
       } else {
-        setIsVisible(false);
+        setIsVisible(false); // Hide navbar while in home section
       }
     };
 
+    // Add event listener for scroll events
     window.addEventListener("scroll", handleScroll);
+
+    // Cleanup on component unmount
     return () => window.removeEventListener("scroll", handleScroll);
   }, [homeSectionHeight]);
 
@@ -38,7 +43,7 @@ const Navbar: React.FC = () => {
         id="navbar"
         className={`w-full bg-[#1a1a1a] text-white py-4 px-8 text-center font-semibold text-lg transition-opacity duration-300 rounded-b-2xl ${
           isVisible ? "opacity-100" : "opacity-0"
-        } ${isVisible ? "fixed top-0 left-0 z-50" : "relative"}`}
+        } fixed top-0 left-0 z-50`}
       >
         <div className="flex justify-between items-center flex-wrap">
           <div className="text-left w-full sm:w-auto">

@@ -70,7 +70,7 @@ const Projects = () => {
               );
               resetAutoScroll();
             }}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-3xl z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:text-[var(--custom-cyan)] hover:scale-125 transition-all duration-300"
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-3xl z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:text-[var(--custom-cyan)] hover:scale-125"
           >
             &lt;
           </button>
@@ -81,7 +81,7 @@ const Projects = () => {
               setCurrentImage((prev) => (prev + 1) % images.length);
               resetAutoScroll();
             }}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-3xl z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:text-[var(--custom-cyan)] hover:scale-125 transition-all duration-300"
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-3xl z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:text-[var(--custom-cyan)] hover:scale-125"
           >
             &gt;
           </button>
