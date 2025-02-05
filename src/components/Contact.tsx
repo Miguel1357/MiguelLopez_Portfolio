@@ -56,7 +56,11 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact-section" className="p-8">
+    <section
+      id="contact-section"
+      className="p-8 mt-60"
+      style={{ paddingTop: "200px", marginTop: "60px" }}
+    >
       <h2 className="text-3xl font-bold mb-4 relative">
         <span
           className="absolute top-7 left-7 w-27 h-2"

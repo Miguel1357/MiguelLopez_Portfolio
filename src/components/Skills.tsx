@@ -50,7 +50,11 @@ const Skills = () => {
   };
 
   return (
-    <section id="skills-section" className="p-8">
+    <section
+      id="skills-section"
+      className="p-8 mt-60"
+      style={{ paddingTop: "200px", marginTop: "60px" }}
+    >
       <h2 className="text-3xl font-bold mb-6 relative inline-block">
         Skills
         <span

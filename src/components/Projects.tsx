@@ -41,7 +41,11 @@ const Projects = () => {
   }, []);
 
   return (
-    <section id="projects-section" className="p-8">
+    <section
+      id="projects-section"
+      className="p-8 mt-60"
+      style={{ paddingTop: "200px", marginTop: "60px" }}
+    >
       <h2 className="text-3xl font-bold mb-6 relative inline-block">
         Projects
         <span
@@ -58,6 +62,7 @@ const Projects = () => {
         <h3 className="text-3xl font-bold text-white">CAMEL</h3>
 
         <div className="relative mt-4 w-full h-64 overflow-hidden group">
+          {/* Left Arrow Button */}
           <button
             onClick={() => {
               setCurrentImage(
@@ -65,16 +70,18 @@ const Projects = () => {
               );
               resetAutoScroll();
             }}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-3xl z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-3xl z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:text-[var(--custom-cyan)] hover:scale-125 transition-all duration-300"
           >
             &lt;
           </button>
+
+          {/* Right Arrow Button */}
           <button
             onClick={() => {
               setCurrentImage((prev) => (prev + 1) % images.length);
               resetAutoScroll();
             }}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-3xl z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-3xl z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:text-[var(--custom-cyan)] hover:scale-125 transition-all duration-300"
           >
             &gt;
           </button>

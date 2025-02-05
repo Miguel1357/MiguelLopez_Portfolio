@@ -1,6 +1,10 @@
 const About = () => {
   return (
-    <section id="about-section" className="p-8 mt-60">
+    <section
+      id="about-section"
+      className="p-8 mt-60"
+      style={{ paddingTop: "200px", marginTop: "60px" }} // Adjust these values to ensure space for navbar
+    >
       {/* Added mt-20 for spacing */}
       <h2 className="text-3xl font-bold mb-20 relative">
         <span

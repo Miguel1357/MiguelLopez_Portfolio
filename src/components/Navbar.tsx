@@ -25,10 +25,9 @@ const Navbar: React.FC = () => {
   const scrollToSection = (id: string) => {
     const section = document.getElementById(id);
     if (section) {
-      const navbarHeight = document.getElementById("navbar")?.offsetHeight || 0;
-      window.scrollTo({
-        top: section.offsetTop - navbarHeight, // Adjust scroll position by subtracting navbar height
-        behavior: "smooth",
+      section.scrollIntoView({
+        behavior: "smooth", // Smooth scrolling
+        block: "start", // Align to the top of the viewport
       });
     }
   };
