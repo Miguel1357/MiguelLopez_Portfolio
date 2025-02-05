@@ -18,7 +18,7 @@ const FadeIn: React.FC<FadeInProps> = ({
   fadeDuration = 0.6, // Default: Smooth fade-in/out
 }) => {
   const controls = useAnimation();
-  const { ref, inView, entry } = useInView({
+  const { ref, inView } = useInView({
     threshold: [fadeOutThreshold, fadeInThreshold],
     triggerOnce: false, // Allows re-fading when scrolling back
   });

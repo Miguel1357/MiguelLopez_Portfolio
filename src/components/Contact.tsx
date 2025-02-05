@@ -1,15 +1,26 @@
 import React, { useState } from "react";
+import Notification from "./Notification"; // Import notification component
 
-const Contact = () => {
-  const [formData, setFormData] = useState({
+interface FormData {
+  name: string;
+  email: string;
+  message: string;
+}
+
+const Contact: React.FC = () => {
+  const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
     message: "",
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submissionStatus, setSubmissionStatus] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [notification, setNotification] = useState<{
+    message: string;
+    type: "success" | "error";
+  } | null>(null);
 
+  // Handle input changes
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -17,8 +28,38 @@ const Contact = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Form submission
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent default form submission behavior
+
+    const name = formData.name.trim();
+    const email = formData.email.trim();
+    const message = formData.message.trim();
+
+    // If email is typed but invalid, prioritize email validation errors first
+    if (email && !email.includes("@")) {
+      setNotification({
+        message: `Please include an '@' in the email address.`,
+        type: "error",
+      });
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (email && !emailRegex.test(email)) {
+      setNotification({
+        message: `Invalid email format. Example: example@domain.com`,
+        type: "error",
+      });
+      return;
+    }
+
+    // General empty field check (only triggers if email is either valid or empty)
+    if (!name || !email || !message) {
+      setNotification({ message: "All fields are required.", type: "error" });
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -26,30 +67,35 @@ const Contact = () => {
         "https://api.emailjs.com/api/v1.0/email/send",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            service_id: "service_j0o9xtx", // Replace with your Service ID
-            template_id: "template_6nsegeg", // Replace with your Template ID
-            user_id: "xBHeyPIKj8OP-VJur", // Replace with your User ID
+            service_id: "service_j0o9xtx",
+            template_id: "template_6nsegeg",
+            user_id: "xBHeyPIKj8OP-VJur",
             template_params: {
-              user_name: formData.name, // Map 'name' to 'user_name'
-              user_email: formData.email, // Map 'email' to 'user_email'
-              message: formData.message, // Map 'message' to 'message'
+              user_name: name,
+              user_email: email,
+              message: message,
             },
           }),
         }
       );
 
       if (response.ok) {
-        setSubmissionStatus("Message sent successfully!");
+        setNotification({
+          message: "Message sent successfully!",
+          type: "success",
+        });
         setFormData({ name: "", email: "", message: "" });
       } else {
-        setSubmissionStatus("Something went wrong, please try again.");
+        setNotification({
+          message: "Something went wrong, please try again.",
+          type: "error",
+        });
       }
     } catch (error) {
-      setSubmissionStatus("Error sending message.");
+      console.error("Error sending message:", error);
+      setNotification({ message: "Error sending message.", type: "error" });
     } finally {
       setIsSubmitting(false);
     }
@@ -62,68 +108,61 @@ const Contact = () => {
       style={{ paddingTop: "200px", marginTop: "60px" }}
     >
       <h2 className="text-3xl font-bold mb-4 relative">
-        <span
-          className="absolute top-7 left-7 w-27 h-2"
-          style={{
-            backgroundColor: "var(--custom-cyan)", // Use your custom color
-            zIndex: -1, // Makes sure the rectangle stays behind the text
-            borderRadius: "0", // Sharp corners
-          }}
-        ></span>
+        <span className="absolute top-7 left-7 w-27 h-2 bg-[var(--custom-cyan)] z-[-1] rounded-none"></span>
         Contact
       </h2>
       <p className="text-lg">
-        Interested in reaching out to me? Leave a message and I will get back to
-        you as soon as possible!
+        Interested in reaching out? Leave a message, and I'll get back to you!
       </p>
 
-      <form onSubmit={handleSubmit} className="mt-6">
+      {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={() => setNotification(null)}
+        />
+      )}
+
+      <form onSubmit={handleSubmit} noValidate className="mt-6">
         <div className="mb-4">
           <input
             type="text"
-            id="name"
             name="name"
             value={formData.name}
             onChange={handleInputChange}
             placeholder="Name"
-            className="w-full p-2 rounded-none bg-[var(--custom-gray)] text-white focus:outline-none focus:ring-2 focus:ring-[var(--custom-cyan)]"
-            required
+            className="w-full p-2 rounded bg-[var(--custom-gray)] text-white focus:outline-none focus:ring-2 focus:ring-[var(--custom-cyan)]"
           />
         </div>
 
         <div className="mb-4">
           <input
             type="email"
-            id="email"
             name="email"
             value={formData.email}
             onChange={handleInputChange}
             placeholder="Email"
-            className="w-full p-2 rounded-none bg-[var(--custom-gray)] text-white focus:outline-none focus:ring-2 focus:ring-[var(--custom-cyan)]"
-            required
+            className="w-full p-2 rounded bg-[var(--custom-gray)] text-white focus:outline-none focus:ring-2 focus:ring-[var(--custom-cyan)]"
           />
         </div>
 
         <div className="mb-4">
           <textarea
-            id="message"
             name="message"
             value={formData.message}
             onChange={handleInputChange}
             placeholder="Message"
-            className="w-full p-2 rounded-none bg-[var(--custom-gray)] text-white focus:outline-none focus:ring-2 focus:ring-[var(--custom-cyan)]"
+            className="w-full p-2 rounded bg-[var(--custom-gray)] text-white focus:outline-none focus:ring-2 focus:ring-[var(--custom-cyan)]"
             rows={4}
-            required
           ></textarea>
         </div>
 
-        {submissionStatus && <p className="mt-4 text-lg">{submissionStatus}</p>}
         <div className="flex justify-center w-full">
           <button
             type="submit"
             disabled={isSubmitting}
             className={`mt-4 p-2 px-6 bg-[var(--custom-cyan)] text-white font-semibold rounded-lg hover:bg-[var(--hover-cyan)] transition-colors ${
-              isSubmitting ? "opacity-50" : ""
+              isSubmitting ? "opacity-50 cursor-not-allowed" : ""
             }`}
           >
             {isSubmitting ? "Submitting..." : "Submit"}
