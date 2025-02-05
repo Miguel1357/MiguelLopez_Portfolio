@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 // Project Images (replace with actual imports)
 import image1 from "../assets/project_images/camel1.png";
@@ -10,18 +10,35 @@ import image5 from "../assets/project_images/camel5.png";
 const Projects = () => {
   // Set up state for image cycle
   const [currentImage, setCurrentImage] = useState(0);
-
-  // Array of images
   const images = [image1, image2, image3, image4, image5];
+  const autoScrollRef = useRef<number | null>(null);
+  const manualScrollTimeoutRef = useRef<number | null>(null);
 
-  // Cycle through images every 3 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
+  const startAutoScroll = () => {
+    autoScrollRef.current = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % images.length);
     }, 3000);
+  };
 
-    return () => clearInterval(interval);
-  }, [images.length]);
+  const stopAutoScroll = () => {
+    if (autoScrollRef.current !== null) {
+      clearInterval(autoScrollRef.current);
+      autoScrollRef.current = null;
+    }
+  };
+
+  const resetAutoScroll = () => {
+    stopAutoScroll();
+    if (manualScrollTimeoutRef.current !== null) {
+      clearTimeout(manualScrollTimeoutRef.current);
+    }
+    manualScrollTimeoutRef.current = window.setTimeout(startAutoScroll, 5000);
+  };
+
+  useEffect(() => {
+    startAutoScroll();
+    return () => stopAutoScroll();
+  }, []);
 
   return (
     <section id="projects-section" className="p-8">
@@ -37,24 +54,26 @@ const Projects = () => {
         ></span>
       </h2>
 
-      <div className="bg-[var(--custom-gray)] p-6 rounded-lg shadow-lg max-w-[400px] mx-auto flex flex-col relative overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_var(--custom-cyan)] hover:ring-2 hover:ring-[var(--custom-cyan)] hover:ring-opacity-50">
+      <div className="relative bg-[var(--custom-gray)] p-6 rounded-lg shadow-lg max-w-[400px] mx-auto flex flex-col overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_var(--custom-cyan)] hover:ring-2 hover:ring-[var(--custom-cyan)] hover:ring-opacity-50 group before:absolute before:top-0 before:left-[-100%] before:w-full before:h-full before:bg-gradient-to-r before:from-transparent before:via-white/50 before:to-transparent before:rotate-[-20deg] before:translate-x-[-100%] before:transition-transform before:duration-500 hover:before:translate-x-[200%]">
         <h3 className="text-3xl font-bold text-white">CAMEL</h3>
 
         <div className="relative mt-4 w-full h-64 overflow-hidden group">
           <button
-            onClick={() =>
+            onClick={() => {
               setCurrentImage(
                 (prev) => (prev - 1 + images.length) % images.length
-              )
-            }
+              );
+              resetAutoScroll();
+            }}
             className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-3xl z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
           >
             &lt;
           </button>
           <button
-            onClick={() =>
-              setCurrentImage((prev) => (prev + 1) % images.length)
-            }
+            onClick={() => {
+              setCurrentImage((prev) => (prev + 1) % images.length);
+              resetAutoScroll();
+            }}
             className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-3xl z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
           >
             &gt;

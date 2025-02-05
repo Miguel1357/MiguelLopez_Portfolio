@@ -1,52 +1,51 @@
 import React, { useState, useEffect } from "react";
 
 const Navbar: React.FC = () => {
-  const [navbarAtTop, setNavbarAtTop] = useState<boolean>(false);
-  const [navbarHeight, setNavbarHeight] = useState<number>(0);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [homeSectionHeight, setHomeSectionHeight] = useState<number>(0);
 
   useEffect(() => {
-    const navbar = document.getElementById("navbar");
-    if (navbar) {
-      setNavbarHeight(navbar.offsetHeight); // Store the height of the navbar
+    const homeSection = document.getElementById("home-section");
+    if (homeSection) {
+      setHomeSectionHeight(homeSection.offsetHeight);
     }
 
     const handleScroll = () => {
-      const homeHeight =
-        document.getElementById("home-section")?.offsetHeight || 0;
-      setNavbarAtTop(window.scrollY >= homeHeight);
+      if (window.scrollY > homeSectionHeight) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [homeSectionHeight]);
 
-  // Function to smoothly scroll to sections
   const scrollToSection = (id: string) => {
     const section = document.getElementById(id);
     if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
+      const navbarHeight = document.getElementById("navbar")?.offsetHeight || 0;
+      window.scrollTo({
+        top: section.offsetTop - navbarHeight, // Adjust scroll position by subtracting navbar height
+        behavior: "smooth",
+      });
     }
   };
 
   return (
     <>
-      {/* Spacer to prevent layout shift */}
-      {navbarAtTop && <div style={{ height: `${navbarHeight}px` }}></div>}
-
       <nav
         id="navbar"
-        className={`w-full bg-[#1a1a1a] text-white py-4 px-8 text-center font-semibold text-lg transition-all duration-300 rounded-b-2xl ${
-          navbarAtTop ? "fixed top-0 left-0 shadow-lg z-50" : "relative"
-        }`}
+        className={`w-full bg-[#1a1a1a] text-white py-4 px-8 text-center font-semibold text-lg transition-opacity duration-300 rounded-b-2xl ${
+          isVisible ? "opacity-100" : "opacity-0"
+        } ${isVisible ? "fixed top-0 left-0 z-50" : "relative"}`}
       >
         <div className="flex justify-between items-center flex-wrap">
-          {/* Left side: Your name and title */}
           <div className="text-left w-full sm:w-auto">
             <h1 className="text-4xl font-bold">Miguel Lopez</h1>
             <h2 className="text-lg font-semibold">Computer Science Graduate</h2>
           </div>
-
-          {/* Right side: Navigation links */}
           <ul className="flex space-x-2 sm:space-x-1 mt-4 sm:mt-0 w-full sm:w-auto justify-center sm:justify-start">
             {["home", "about", "projects", "skills", "contact"].map(
               (section) => (
