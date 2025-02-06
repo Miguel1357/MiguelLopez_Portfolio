@@ -100,12 +100,14 @@ const Home: React.FC = () => {
           showCV ? "max-h-[600px] opacity-100 mt-4" : "max-h-0 opacity-0"
         }`}
       >
-        <iframe
-          src="./MiguelJLopez_Resume.pdf"
-          width="100%"
-          className="border-none rounded-lg w-full h-[600px] sm:h-[500px] md:h-[600px]"
-          title="Resume"
-        />
+        <div className="w-full flex justify-center">
+          <iframe
+            src="./MiguelJLopez_Resume.pdf"
+            className="border-none rounded-lg w-full sm:w-[90%] md:w-[80%] h-[600px] sm:h-[500px] md:h-[600px] scale-75 sm:scale-90 md:scale-100 transform origin-top-left"
+            style={{ overflow: "hidden" }}
+            title="Resume"
+          />
+        </div>
       </div>
 
       <div className="flex space-x-4 mt-6 z-10">
