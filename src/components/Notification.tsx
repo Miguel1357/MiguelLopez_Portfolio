@@ -24,7 +24,7 @@ const Notification: React.FC<NotificationProps> = ({
   return (
     <div
       className={`fixed top-5 right-5 max-w-xs w-full shadow-lg rounded-lg px-4 py-3 text-white flex justify-between items-center transition-all duration-500 ${
-        type === "success" ? "bg-[#055605]" : "bg-[#941A1A]"
+        type === "success" ? "bg-green-500" : "bg-red-500"
       } ${isVisible ? "animate-slideIn" : "animate-fadeOut"}`}
       style={{ zIndex: 9999 }} // Ensure it's above other elements
     >
@@ -43,7 +43,7 @@ const Notification: React.FC<NotificationProps> = ({
           viewBox="0 0 24 24"
           width="24"
           height="24"
-          className="group-hover:stroke-[#941A1A] stroke-white transition-colors duration-300 relative z-10"
+          className="group-hover:stroke-red-500 stroke-white transition-colors duration-300 relative z-10"
         >
           <line
             x1="6"

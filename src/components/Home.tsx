@@ -98,19 +98,21 @@ const Home: React.FC = () => {
 
       {/* CV Section */}
       <div
-        className={`w-3/4 max-w-3xl overflow-hidden transition-all duration-500 flex-grow ${
+        className={`w-full max-w-3xl overflow-hidden transition-all duration-500 flex-grow ${
           showCV
             ? "max-h-[calc(100vh-4rem)] opacity-100 mt-4"
             : "max-h-0 opacity-0"
         }`}
       >
         <div className="w-full rounded-lg min-h-[600px] max-h-[90vh] overflow-auto">
-          <iframe
-            src="./MiguelJLopez_Resume.pdf"
-            width="100%"
-            className="border-none w-full min-h-[600px] h-[calc(90vh-4rem)]"
-            title="Resume"
-          />
+          {/* PDF Viewer */}
+          <div className="w-full overflow-hidden">
+            <iframe
+              src="./MiguelJLopez_Resume.pdf"
+              className="border-none w-full min-h-[600px] h-[calc(90vh-4rem)]"
+              title="Resume"
+            />
+          </div>
         </div>
       </div>
 
