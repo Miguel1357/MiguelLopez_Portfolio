@@ -56,11 +56,12 @@ const HomeAnimation = () => {
       <Canvas
         camera={{ position: [0, 1, 5] }}
         style={{
-          position: "fixed", // Keeps the background fixed
+          position: "absolute", // Ensures the animation stays in place
           top: 0,
           left: 0,
           width: "100vw", // Full width
           height: "100vh", // Full height
+          zIndex: -1, // Place the animation behind content
         }}
       >
         <ambientLight intensity={0.3} />
