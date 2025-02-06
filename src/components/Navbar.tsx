@@ -63,10 +63,14 @@ const Navbar: React.FC = () => {
       } fixed top-0 left-0 z-50`}
     >
       <div className="flex justify-between items-center flex-wrap">
-        <div className="text-left w-full sm:w-auto">
+        <button
+          onClick={() => scrollToSection("home-section")}
+          className="px-2 py-2 rounded-md transition-colors duration-200 text-white hover:bg-[var(--hover-gray)] active:bg-gray-800"
+        >
           <h1 className="text-4xl font-bold">Miguel Lopez</h1>
           <h2 className="text-lg font-semibold">Computer Science Graduate</h2>
-        </div>
+        </button>
+
         <ul className="flex space-x-2 sm:space-x-1 mt-4 sm:mt-0 w-full sm:w-auto justify-center sm:justify-start">
           {["home", "about", "projects", "skills", "contact"].map((section) => (
             <li key={section}>
