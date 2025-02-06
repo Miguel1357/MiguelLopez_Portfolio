@@ -49,11 +49,11 @@ const Projects = () => {
       <h2 className="text-3xl font-bold mb-6 relative inline-block">
         Projects
         <span
-          className="absolute top-7 left-7 w-24 h-2"
+          className="absolute top-7 left-7 w-27 h-2"
           style={{
             backgroundColor: "var(--custom-cyan)",
-            zIndex: -1,
-            borderRadius: "0",
+            zIndex: -1, // Makes sure the rectangle stays behind the text
+            borderRadius: "0", // Sharp corners
           }}
         ></span>
       </h2>
