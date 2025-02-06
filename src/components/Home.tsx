@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import HomeAnimation from "../animations/HomeAnimation"; // Import the animation
 
 const titles = ["Software Engineer", "Web Dev", "App Dev", "Game Dev"];
 
@@ -42,6 +43,7 @@ const Home: React.FC = () => {
         showCV ? "h-auto pb-10" : ""
       }`}
     >
+      <HomeAnimation /> {/* Three.js animation as background */}
       <p className="text-center text-[var(--gray-text)] z-10">
         Greetings! I am
       </p>
@@ -56,7 +58,6 @@ const Home: React.FC = () => {
         <strong className="text-white">innovate</strong> and{" "}
         <strong className="text-white">redefine</strong>.
       </p>
-
       {/* Buttons */}
       <div className="flex space-x-4 mt-25 z-10">
         <button
@@ -82,8 +83,7 @@ const Home: React.FC = () => {
           Contact Me
         </button>
       </div>
-
-      {/* Download CV Button - Only visible when CV is open */}
+      {/* Download CV Button */}
       {showCV && (
         <div className="mt-4 z-10">
           <a
@@ -95,7 +95,6 @@ const Home: React.FC = () => {
           </a>
         </div>
       )}
-
       {/* CV Section */}
       <div
         className={`w-full max-w-3xl overflow-hidden transition-all duration-500 flex-grow ${
@@ -115,9 +114,8 @@ const Home: React.FC = () => {
           </div>
         </div>
       </div>
-
+      {/* LinkedIn & GitHub Buttons */}
       <div className="flex space-x-4 mt-6 z-10">
-        {/* LinkedIn Button */}
         <a
           href="https://www.linkedin.com/in/migueljlopez02/"
           target="_blank"
@@ -127,7 +125,6 @@ const Home: React.FC = () => {
           in
         </a>
 
-        {/* GitHub Button */}
         <a
           href="https://github.com/Miguel1357"
           target="_blank"
@@ -137,8 +134,7 @@ const Home: React.FC = () => {
           git
         </a>
       </div>
-
-      {/* Tailwind Animations */}
+      {/* Typing Animation Styling */}
       <style>
         {`
           @keyframes blink {
