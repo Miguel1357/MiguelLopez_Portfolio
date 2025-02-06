@@ -110,64 +110,73 @@ const Contact: React.FC = () => {
         <span className="absolute top-7 left-7 w-27 h-2 bg-[var(--custom-cyan)] z-[-1] rounded-none"></span>
         Contact
       </h2>
-      <p className="text-lg">
-        Interested in reaching out? Leave a message, and I'll get back to you!
-      </p>
+      <div className="flex flex-col items-center w-full">
+        <div className="w-full flex justify-center">
+          <p className="text-lg w-full max-w-lg text-left">
+            Interested in reaching out to me? Leave a message and I will get
+            back to you as soon as possible!
+          </p>
+        </div>
 
-      {notification && (
-        <Notification
-          message={notification.message}
-          type={notification.type}
-          onClose={() => setNotification(null)}
-        />
-      )}
-
-      <form onSubmit={handleSubmit} noValidate className="mt-6">
-        <div className="mb-4">
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleInputChange}
-            placeholder="Name"
-            className="w-full p-2 rounded bg-[var(--custom-gray)] text-white focus:outline-none focus:ring-2 focus:ring-[var(--custom-cyan)]"
+        {notification && (
+          <Notification
+            message={notification.message}
+            type={notification.type}
+            onClose={() => setNotification(null)}
           />
-        </div>
+        )}
 
-        <div className="mb-4">
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleInputChange}
-            placeholder="Email"
-            className="w-full p-2 rounded bg-[var(--custom-gray)] text-white focus:outline-none focus:ring-2 focus:ring-[var(--custom-cyan)]"
-          />
-        </div>
+        <form
+          onSubmit={handleSubmit}
+          noValidate
+          className="mt-6 flex flex-col items-center w-full"
+        >
+          <div className="mb-4 w-full flex justify-center">
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleInputChange}
+              placeholder="Name"
+              className="w-full max-w-lg p-2 rounded bg-[var(--custom-gray)] text-white focus:outline-none focus:ring-2 focus:ring-[var(--custom-cyan)]"
+            />
+          </div>
 
-        <div className="mb-4">
-          <textarea
-            name="message"
-            value={formData.message}
-            onChange={handleInputChange}
-            placeholder="Message"
-            className="w-full p-2 rounded bg-[var(--custom-gray)] text-white focus:outline-none focus:ring-2 focus:ring-[var(--custom-cyan)]"
-            rows={4}
-          ></textarea>
-        </div>
+          <div className="mb-4 w-full flex justify-center">
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              placeholder="Email"
+              className="w-full max-w-lg p-2 rounded bg-[var(--custom-gray)] text-white focus:outline-none focus:ring-2 focus:ring-[var(--custom-cyan)]"
+            />
+          </div>
 
-        <div className="flex justify-center w-full">
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className={`mt-4 p-2 px-6 bg-[var(--custom-cyan)] text-white font-semibold rounded-lg hover:bg-[var(--hover-cyan)] transition-colors ${
-              isSubmitting ? "opacity-50 cursor-not-allowed" : ""
-            }`}
-          >
-            {isSubmitting ? "Submitting..." : "Submit"}
-          </button>
-        </div>
-      </form>
+          <div className="mb-4 w-full flex justify-center">
+            <textarea
+              name="message"
+              value={formData.message}
+              onChange={handleInputChange}
+              placeholder="Message"
+              className="w-full max-w-lg p-2 rounded bg-[var(--custom-gray)] text-white focus:outline-none focus:ring-2 focus:ring-[var(--custom-cyan)]"
+              rows={4}
+            ></textarea>
+          </div>
+
+          <div className="flex justify-center w-full">
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className={`mt-4 p-2 px-6 bg-[var(--custom-cyan)] text-white font-semibold rounded-lg hover:bg-[var(--hover-cyan)] transition-colors ${
+                isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+              }`}
+            >
+              {isSubmitting ? "Submitting..." : "Submit"}
+            </button>
+          </div>
+        </form>
+      </div>
     </section>
   );
 };
