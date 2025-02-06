@@ -58,34 +58,10 @@ const Projects = () => {
         ></span>
       </h2>
 
-      <div className="relative bg-[var(--custom-gray)] p-6 rounded-lg shadow-lg max-w-[400px] mx-auto flex flex-col overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_var(--custom-cyan)] hover:ring-2 hover:ring-[var(--custom-cyan)] hover:ring-opacity-50 group before:absolute before:top-0 before:left-[-100%] before:w-full before:h-full before:bg-gradient-to-r before:from-transparent before:via-white/50 before:to-transparent before:rotate-[-20deg] before:translate-x-[-100%] before:transition-transform before:duration-500 hover:before:translate-x-[200%]">
+      <div className="relative bg-[var(--custom-gray)] px-8 py-6 rounded-lg shadow-lg max-w-[400px] mx-auto flex flex-col overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_var(--custom-cyan)] hover:ring-2 hover:ring-[var(--custom-cyan)] hover:ring-opacity-50 group before:absolute before:top-0 before:left-[-100%] before:w-full before:h-full before:bg-gradient-to-r before:from-transparent before:via-white/50 before:to-transparent before:rotate-[-20deg] before:translate-x-[-100%] before:transition-transform before:duration-500 hover:before:translate-x-[200%]">
         <h3 className="text-3xl font-bold text-white">CAMEL</h3>
 
         <div className="relative mt-4 w-full h-64 overflow-hidden group">
-          {/* Left Arrow Button */}
-          <button
-            onClick={() => {
-              setCurrentImage(
-                (prev) => (prev - 1 + images.length) % images.length
-              );
-              resetAutoScroll();
-            }}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-3xl z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:text-[var(--custom-cyan)] hover:scale-125"
-          >
-            &lt;
-          </button>
-
-          {/* Right Arrow Button */}
-          <button
-            onClick={() => {
-              setCurrentImage((prev) => (prev + 1) % images.length);
-              resetAutoScroll();
-            }}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-3xl z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:text-[var(--custom-cyan)] hover:scale-125"
-          >
-            &gt;
-          </button>
-
           <div
             className="flex w-full h-full transition-transform duration-500 ease-in-out"
             style={{ transform: `translateX(-${currentImage * 100}%)` }}
@@ -100,11 +76,34 @@ const Projects = () => {
             ))}
           </div>
 
-          <div className="absolute inset-0 bg-gray-800 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
           <span className="absolute bottom-2 left-2 bg-[var(--custom-cyan)] text-white px-3 py-1 text-xs font-bold rounded">
             AUG, 2023
           </span>
         </div>
+
+        {/* Left Arrow Button */}
+        <button
+          onClick={() => {
+            setCurrentImage(
+              (prev) => (prev - 1 + images.length) % images.length
+            );
+            resetAutoScroll();
+          }}
+          className="absolute left-1 mt-45 transform -translate-y-1/2 text-white text-3xl z-10 opacity-100 hover:text-[var(--custom-cyan)] hover:scale-125 transition-all duration-300"
+        >
+          &lt;
+        </button>
+
+        {/* Right Arrow Button */}
+        <button
+          onClick={() => {
+            setCurrentImage((prev) => (prev + 1) % images.length);
+            resetAutoScroll();
+          }}
+          className="absolute right-1 mt-45 transform -translate-y-1/2 text-white text-3xl z-10 opacity-100 hover:text-[var(--custom-cyan)] hover:scale-125 transition-all duration-300"
+        >
+          &gt;
+        </button>
 
         <div className="mt-4 text-white">
           <p className="text-sm mt-2">
