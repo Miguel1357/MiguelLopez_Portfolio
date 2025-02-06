@@ -38,7 +38,9 @@ const Home: React.FC = () => {
   return (
     <section
       id="home-section"
-      className="relative h-screen flex flex-col justify-center items-center text-white overflow-hidden"
+      className={`relative min-h-screen flex flex-col justify-center items-center text-white overflow-hidden ${
+        showCV ? "h-auto pb-10" : ""
+      }`}
     >
       <p className="text-center text-[var(--gray-text)] z-10">
         Greetings! I am
@@ -96,15 +98,17 @@ const Home: React.FC = () => {
 
       {/* CV Section */}
       <div
-        className={`w-3/4 max-w-3xl overflow-hidden transition-all duration-500 ${
-          showCV ? "max-h-[600px] opacity-100 mt-4" : "max-h-0 opacity-0"
+        className={`w-3/4 max-w-3xl overflow-hidden transition-all duration-500 flex-grow ${
+          showCV
+            ? "max-h-[calc(100vh-4rem)] opacity-100 mt-4"
+            : "max-h-0 opacity-0"
         }`}
       >
-        <div className="w-full flex justify-center">
+        <div className="w-full rounded-lg min-h-[600px] max-h-[90vh] overflow-auto">
           <iframe
             src="./MiguelJLopez_Resume.pdf"
-            className="border-none rounded-lg w-full sm:w-[90%] md:w-[80%] h-[600px] sm:h-[500px] md:h-[600px] scale-75 sm:scale-90 md:scale-100 transform origin-top-left"
-            style={{ overflow: "hidden" }}
+            width="100%"
+            className="border-none w-full min-h-[600px] h-[calc(90vh-4rem)]"
             title="Resume"
           />
         </div>

@@ -2,22 +2,19 @@ import React, { useState, useEffect } from "react";
 
 const Navbar: React.FC = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  const [homeSectionHeight, setHomeSectionHeight] = useState<number>(0);
   const [activeSection, setActiveSection] = useState<string>("home"); // Track active section
 
   useEffect(() => {
-    // Set home section height dynamically
-    const homeSection = document.getElementById("home-section");
-    if (homeSection) {
-      setHomeSectionHeight(homeSection.offsetHeight);
-    }
-
-    // Detect scroll and toggle visibility based on the scroll position
+    // Function to calculate the home section height dynamically
     const handleScroll = () => {
+      const homeSection = document.getElementById("home-section");
+      const homeSectionHeight = homeSection ? homeSection.offsetHeight : 0;
+
+      // Only show the navbar when the user has scrolled past the home section
       if (window.scrollY > homeSectionHeight) {
-        setIsVisible(true); // Show navbar after scrolling past home section
+        setIsVisible(true);
       } else {
-        setIsVisible(false); // Hide navbar while in home section
+        setIsVisible(false);
       }
 
       // Update active section based on scroll position
@@ -41,9 +38,12 @@ const Navbar: React.FC = () => {
     // Add event listener for scroll events
     window.addEventListener("scroll", handleScroll);
 
+    // Initial call to set visibility
+    handleScroll();
+
     // Cleanup on component unmount
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [homeSectionHeight]);
+  }, []);
 
   const scrollToSection = (id: string) => {
     const section = document.getElementById(id);
