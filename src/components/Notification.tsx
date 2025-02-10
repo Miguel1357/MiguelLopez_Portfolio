@@ -23,7 +23,7 @@ const Notification: React.FC<NotificationProps> = ({
 
   return (
     <div
-      className={`fixed top-5 right-5 max-w-xs w-full shadow-lg rounded-lg px-4 py-3 text-white flex justify-between items-center transition-all duration-500 ${
+      className={`absolute top-40 right-5 max-w-xs w-full shadow-lg rounded-lg px-4 py-3 text-white flex justify-between items-center transition-all duration-500 ${
         type === "success" ? "bg-green-500" : "bg-red-500"
       } ${isVisible ? "animate-slideIn" : "animate-fadeOut"}`}
       style={{ zIndex: 9999 }} // Ensure it's above other elements

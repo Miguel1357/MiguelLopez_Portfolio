@@ -103,7 +103,7 @@ const Contact: React.FC = () => {
   return (
     <section
       id="contact-section"
-      className="p-8 mt-60"
+      className="p-8 mt-60 pb-20 relative" // Added relative positioning
       style={{ paddingTop: "200px", marginTop: "60px" }}
     >
       <h2 className="text-3xl font-bold mb-4 relative">

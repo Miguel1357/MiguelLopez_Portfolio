@@ -2,6 +2,25 @@
 
 body {
   @apply bg-black text-white;
+  overflow-x: hidden;
+}
+
+/* Ensure the Canvas or other animations do not cause overflow */
+.general-animation-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -10; /* Ensure it's behind other elements */
+}
+
+/* Make sure no content causes horizontal scrolling */
+html,
+body {
+  width: 100%;
+  height: 100%;
 }
 
 @layer base {
@@ -46,4 +65,20 @@ body {
 
 .animate-fadeOut {
   animation: fadeOut 0.3s ease-in forwards;
+}
+
+@keyframes bounceHover {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@layer utilities {
+  .animate-bounce-hover {
+    animation: bounceHover 0.8s ease-in-out infinite;
+  }
 }

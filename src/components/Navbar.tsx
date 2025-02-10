@@ -2,22 +2,16 @@ import React, { useState, useEffect } from "react";
 
 const Navbar: React.FC = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  const [activeSection, setActiveSection] = useState<string>("home"); // Track active section
+  const [activeSection, setActiveSection] = useState<string>("home");
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
 
   useEffect(() => {
-    // Function to calculate the home section height dynamically
     const handleScroll = () => {
       const homeSection = document.getElementById("home-section");
       const homeSectionHeight = homeSection ? homeSection.offsetHeight : 0;
 
-      // Only show the navbar when the user has scrolled past the home section
-      if (window.scrollY > homeSectionHeight) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
-      }
+      setIsVisible(window.scrollY > homeSectionHeight * 0.5);
 
-      // Update active section based on scroll position
       const sections = ["home", "about", "projects", "skills", "contact"];
       const currentSection = sections.find((section) => {
         const element = document.getElementById(`${section}-section`);
@@ -30,63 +24,58 @@ const Navbar: React.FC = () => {
         }
         return false;
       });
+
       if (currentSection) {
         setActiveSection(currentSection);
       }
     };
 
-    // Add event listener for scroll events
     window.addEventListener("scroll", handleScroll);
-
-    // Initial call to set visibility
     handleScroll();
 
-    // Cleanup on component unmount
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const scrollToSection = (id: string) => {
     const section = document.getElementById(id);
     if (section) {
-      section.scrollIntoView({
-        behavior: "smooth", // Smooth scrolling
-        block: "start", // Align to the top of the viewport
-      });
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
 
   return (
     <nav
       id="navbar"
-      className={`w-full bg-[#1a1a1a] text-white py-4 px-8 text-center font-semibold text-lg transition-opacity duration-300 rounded-b-2xl ${
+      className={`w-full bg-[#1a1a1a] text-white py-4 px-6 font-semibold text-lg transition-opacity duration-300 rounded-b-2xl ${
         isVisible ? "opacity-100" : "opacity-0"
       } fixed top-0 left-0 z-50`}
     >
-      <div className="flex justify-between items-center flex-wrap">
-        <button
-          onClick={() => scrollToSection("home-section")}
-          className="px-2 py-2 rounded-md transition-colors duration-200 text-white hover:bg-[var(--hover-gray)] active:bg-gray-800"
-        >
-          <h1 className="text-4xl font-bold">Miguel Lopez</h1>
-          <h2 className="text-lg font-semibold">Computer Science Graduate</h2>
-        </button>
-
-        <ul className="flex space-x-2 sm:space-x-1 mt-4 sm:mt-0 w-full sm:w-auto justify-center sm:justify-start">
+      <div className="flex items-center justify-between w-full">
+        {/* Left Side - Section Buttons */}
+        <ul className="flex space-x-3">
           {["home", "about", "projects", "skills", "contact"].map((section) => (
             <li key={section}>
               <button
                 onClick={() => scrollToSection(`${section}-section`)}
-                className={`px-2 py-2 rounded-md transition-colors duration-200 ${
+                className={`px-3 py-2 rounded-md transition-colors duration-200 ${
                   activeSection === section
-                    ? "bg-[var(--custom-cyan)] text-white" // Active button
+                    ? "bg-[var(--custom-cyan)] text-white"
                     : "text-white"
-                } hover:bg-[var(--hover-cyan)]`} // Hover effect applied here
+                } hover:bg-[var(--hover-cyan)]`}
               >
                 {section.charAt(0).toUpperCase() + section.slice(1)}
               </button>
             </li>
           ))}
         </ul>
+
+        {/* Right Side - Dark Mode Toggle Button */}
+        <button
+          onClick={() => setIsDarkMode((prev) => !prev)}
+          className="ml-3 px-3 py-2 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors duration-200 text-xl"
+        >
+          {isDarkMode ? "🌙" : "☀️"}
+        </button>
       </div>
     </nav>
   );
