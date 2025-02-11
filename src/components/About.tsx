@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 // Import skill icons
 import pythonIcon from "../assets/skill_icons/python.png";
@@ -30,6 +31,7 @@ const About = () => {
   const [hoverEffect, setHoverEffect] = useState<
     Record<string, { x: number; y: number }>
   >({});
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
 
   const handleMouseMove = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -45,17 +47,19 @@ const About = () => {
   };
 
   const handleMouseLeave = (skillName: string) => {
-    // Explicitly define skillName as a string
     setHoverEffect((prev) => ({ ...prev, [skillName]: { x: 0, y: 0 } }));
   };
 
   return (
-    <section
+    <motion.section
       id="about-section"
       className="p-8 mt-60 flex flex-col items-center"
       style={{ paddingTop: "200px", marginTop: "60px", minHeight: "100vh" }}
+      ref={ref}
+      initial={{ opacity: 0, y: 50 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.8, ease: "easeOut" }}
     >
-      {/* Centered Title Above Both Sections */}
       <h2 className="text-6xl font-bold mb-16 text-center w-full relative">
         <span
           className="absolute top-12 left-[50%] transform -translate-x-[28%] w-40 h-5"
@@ -64,17 +68,18 @@ const About = () => {
         About
       </h2>
 
-      {/* Container for About & Skills Sections */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 w-full max-w-screen-xl mx-auto">
-        {/* About Section */}
-        <div className="flex flex-col items-center text-center mx-auto lg:max-w-md">
-          <div className="flex justify-center mb-4">
-            <img
-              src="MiguelJLopez.jpg"
-              alt="Miguel Lopez"
-              className="w-50 h-50 object-cover mb-7 rounded-full" // Added rounded-full to make the image circular
-            />
-          </div>
+        <motion.div
+          className="flex flex-col items-center text-center mx-auto lg:max-w-md"
+          initial={{ opacity: 0, y: 50 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          <img
+            src="MiguelJLopez.jpg"
+            alt="Miguel Lopez"
+            className="w-50 h-50 object-cover mb-7 rounded-full"
+          />
           <h3 className="text-4xl font-bold text-center mb-2">Miguel Lopez</h3>
           <h4 className="font-bold mb-4 text-center">
             Computer Science Graduate
@@ -96,10 +101,14 @@ const About = () => {
               let’s connect!
             </p>
           </div>
-        </div>
+        </motion.div>
 
-        {/* Skills Section */}
-        <div className="flex flex-col items-center justify-center mx-auto lg:max-w-md">
+        <motion.div
+          className="flex flex-col items-center justify-center mx-auto lg:max-w-md"
+          initial={{ opacity: 0, y: 50 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.4 }}
+        >
           <div className="flex justify-center space-x-6">
             {[0, 3, 7].map((startIdx, columnIndex) => (
               <div
@@ -144,9 +153,9 @@ const About = () => {
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
