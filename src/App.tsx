@@ -3,7 +3,6 @@ import Home from "./components/Home";
 import Navbar from "./components/Navbar";
 import About from "./components/About";
 import Projects from "./components/Projects";
-import Skills from "./components/Skills";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import GeneralAnimation from "./animations/GeneralAnimation";
@@ -27,9 +26,6 @@ function App() {
         <GeneralAnimation className="general-animation-container" />{" "}
         <FadeIn fadeInThreshold={0.5} fadeOutThreshold={0.7} fadeDuration={0.5}>
           <Projects />
-        </FadeIn>
-        <FadeIn fadeInThreshold={0.5} fadeOutThreshold={0.7} fadeDuration={0.5}>
-          <Skills />
         </FadeIn>
         <FadeIn fadeInThreshold={0.5} fadeOutThreshold={0.7} fadeDuration={0.5}>
           <Contact />

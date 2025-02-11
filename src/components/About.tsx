@@ -1,50 +1,150 @@
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+
+// Import skill icons
+import pythonIcon from "../assets/skill_icons/python.png";
+import javaIcon from "../assets/skill_icons/java.png";
+import typescriptIcon from "../assets/skill_icons/typescript.png";
+import cssIcon from "../assets/skill_icons/css.png";
+import htmlIcon from "../assets/skill_icons/html.png";
+import rIcon from "../assets/skill_icons/r.png";
+import bashIcon from "../assets/skill_icons/bash.png";
+import csharpIcon from "../assets/skill_icons/csharp.png";
+import cIcon from "../assets/skill_icons/c.png";
+import mysqlIcon from "../assets/skill_icons/mysql.png";
+
+const skills = [
+  { name: "PYTHON", icon: pythonIcon },
+  { name: "JAVA", icon: javaIcon },
+  { name: "TYPESCRIPT", icon: typescriptIcon },
+  { name: "CSS", icon: cssIcon },
+  { name: "HTML", icon: htmlIcon },
+  { name: "R", icon: rIcon },
+  { name: "BASH", icon: bashIcon },
+  { name: "C#", icon: csharpIcon },
+  { name: "C", icon: cIcon },
+  { name: "MYSQL", icon: mysqlIcon },
+];
+
 const About = () => {
+  const [hoverEffect, setHoverEffect] = useState<
+    Record<string, { x: number; y: number }>
+  >({});
+
+  const handleMouseMove = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    skillName: string // Explicitly define skillName as a string
+  ) => {
+    const { clientX, clientY, currentTarget } = e;
+    const { left, top, width, height } = currentTarget.getBoundingClientRect();
+
+    const x = -((clientX - left) / width - 0.5) * 300;
+    const y = -((clientY - top) / height - 0.5) * 300;
+
+    setHoverEffect((prev) => ({ ...prev, [skillName]: { x, y } }));
+  };
+
+  const handleMouseLeave = (skillName: string) => {
+    // Explicitly define skillName as a string
+    setHoverEffect((prev) => ({ ...prev, [skillName]: { x: 0, y: 0 } }));
+  };
+
   return (
     <section
       id="about-section"
-      className="p-8 mt-60"
-      style={{ paddingTop: "200px", marginTop: "60px" }} // Adjust these values to ensure space for navbar
+      className="p-8 mt-60 flex flex-col items-center"
+      style={{ paddingTop: "200px", marginTop: "60px", minHeight: "100vh" }}
     >
-      {/* Added mt-20 for spacing */}
-      <h2 className="text-3xl font-bold mb-20 relative">
+      {/* Centered Title Above Both Sections */}
+      <h2 className="text-6xl font-bold mb-16 text-center w-full relative">
         <span
-          className="absolute top-7 left-7 w-27 h-2"
-          style={{
-            backgroundColor: "var(--custom-cyan)",
-            zIndex: -1, // Makes sure the rectangle stays behind the text
-            borderRadius: "0", // Sharp corners
-          }}
+          className="absolute top-12 left-[50%] transform -translate-x-[28%] w-40 h-5"
+          style={{ backgroundColor: "var(--custom-cyan)", zIndex: -1 }}
         ></span>
         About
       </h2>
-      {/* Image of yourself */}
-      <div className="flex justify-center mb-4">
-        <img
-          src="MiguelJLopez.jpg" // Replace with the actual path to your image
-          alt="Miguel Lopez"
-          className="w-50 h-50 object-cover mb-7" // Added mb-6 to create space below the image
-        />
-      </div>
-      {/* Name and title */}
-      <h3 className="text-4xl font-bold text-center mb-2">Miguel Lopez</h3>{" "}
-      {/* Added mb-2 for space between name and title */}
-      <h4 className="font-bold mb-4 text-center">Computer Science Graduate</h4>
-      {/* About text */}
-      <div className="space-y-6 max-w-2xl mx-auto">
-        <p className="px-16">
-          Hi, I’m Miguel Lopez, a recent Computer Science graduate from
-          California State University, Sacramento. I’m fascinated by technology
-          and enjoy finding creative ways to improve or reinvent ideas.
-        </p>
-        <p className="px-16">
-          I focus on creating meaningful innovations while appreciating the
-          value of small improvements that meet niche needs and make a lasting
-          impact.
-        </p>
-        <p className="mb-15 px-16">
-          If you’re looking for someone to help bring your vision to life, let’s
-          connect!
-        </p>
+
+      {/* Container for About & Skills Sections */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 w-full max-w-screen-xl mx-auto">
+        {/* About Section */}
+        <div className="flex flex-col items-center text-center mx-auto lg:max-w-md">
+          <div className="flex justify-center mb-4">
+            <img
+              src="MiguelJLopez.jpg"
+              alt="Miguel Lopez"
+              className="w-50 h-50 object-cover mb-7 rounded-full" // Added rounded-full to make the image circular
+            />
+          </div>
+          <h3 className="text-4xl font-bold text-center mb-2">Miguel Lopez</h3>
+          <h4 className="font-bold mb-4 text-center">
+            Computer Science Graduate
+          </h4>
+          <div className="space-y-6 max-w-2xl mx-auto">
+            <p className="px-16 text-left">
+              Hi, I’m Miguel Lopez, a recent Computer Science graduate from
+              California State University, Sacramento. I’m fascinated by
+              technology and enjoy finding creative ways to improve or reinvent
+              ideas.
+            </p>
+            <p className="px-16 text-left">
+              I focus on creating meaningful innovations while appreciating the
+              value of small improvements that meet niche needs and make a
+              lasting impact.
+            </p>
+            <p className="mb-15 px-16 text-left">
+              If you’re looking for someone to help bring your vision to life,
+              let’s connect!
+            </p>
+          </div>
+        </div>
+
+        {/* Skills Section */}
+        <div className="flex flex-col items-center justify-center mx-auto lg:max-w-md">
+          <div className="flex justify-center space-x-6">
+            {[0, 3, 7].map((startIdx, columnIndex) => (
+              <div
+                key={columnIndex}
+                className={`flex flex-col items-center space-y-4 ${
+                  columnIndex === 0 || columnIndex === 2 ? "mt-16" : ""
+                }`}
+              >
+                {skills
+                  .slice(startIdx, startIdx + (columnIndex === 1 ? 4 : 3))
+                  .map((skill) => (
+                    <motion.div
+                      key={skill.name}
+                      className="flex flex-col items-center bg-[var(--custom-gray)] p-4 rounded-lg shadow-lg w-24 h-24 sm:w-28 sm:h-28 transition-transform"
+                      style={{
+                        boxShadow:
+                          hoverEffect[skill.name]?.x ||
+                          hoverEffect[skill.name]?.y
+                            ? `0 0 10px 3px var(--custom-cyan), 0 0 15px 6px var(--custom-cyan)`
+                            : "none",
+                      }}
+                      onMouseMove={(e) => handleMouseMove(e, skill.name)}
+                      onMouseLeave={() => handleMouseLeave(skill.name)}
+                      animate={{
+                        x: hoverEffect[skill.name]?.x || 0,
+                        y: hoverEffect[skill.name]?.y || 0,
+                      }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 100,
+                        damping: 15,
+                      }}
+                    >
+                      <img
+                        src={skill.icon}
+                        alt={skill.name}
+                        className="w-12 h-12"
+                      />
+                      <p className="text-white text-sm mt-2">{skill.name}</p>
+                    </motion.div>
+                  ))}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

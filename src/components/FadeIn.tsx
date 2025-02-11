@@ -1,26 +1,46 @@
 import { motion, useAnimation } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
 interface FadeInProps {
   children: React.ReactNode;
   className?: string;
-  fadeInThreshold?: number; // Customizable threshold for fade-in
-  fadeOutThreshold?: number; // Customizable threshold for fade-out
-  fadeDuration?: number; // Customizable transition speed
+  fadeInThreshold?: number;
+  fadeOutThreshold?: number;
+  fadeDuration?: number;
 }
 
 const FadeIn: React.FC<FadeInProps> = ({
   children,
   className,
-  fadeInThreshold = 0.5, // Default: 50% of section is in view
-  fadeOutThreshold = 0.3, // Default: Starts fading out earlier
-  fadeDuration = 0.6, // Default: Smooth fade-in/out
+  fadeInThreshold = 0.5,
+  fadeOutThreshold = 0.3,
+  fadeDuration = 0.6,
 }) => {
   const controls = useAnimation();
+  const [threshold, setThreshold] = useState([
+    fadeOutThreshold,
+    fadeInThreshold,
+  ]);
+
+  // Adjust the threshold based on screen size
+  useEffect(() => {
+    const handleResize = () => {
+      const height = window.innerHeight;
+      setThreshold(
+        height < 800 ? [0.2, 0.4] : [fadeOutThreshold, fadeInThreshold]
+      );
+    };
+
+    handleResize(); // Run once on mount
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, [fadeInThreshold, fadeOutThreshold]);
+
   const { ref, inView } = useInView({
-    threshold: [fadeOutThreshold, fadeInThreshold],
-    triggerOnce: false, // Allows re-fading when scrolling back
+    threshold,
+    triggerOnce: false,
   });
 
   useEffect(() => {

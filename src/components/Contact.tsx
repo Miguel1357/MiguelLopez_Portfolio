@@ -106,8 +106,12 @@ const Contact: React.FC = () => {
       className="p-8 mt-60 pb-20 relative" // Added relative positioning
       style={{ paddingTop: "200px", marginTop: "60px" }}
     >
-      <h2 className="text-3xl font-bold mb-4 relative">
-        <span className="absolute top-7 left-7 w-27 h-2 bg-[var(--custom-cyan)] z-[-1] rounded-none"></span>
+      {/* Centered Title Above Both Sections */}
+      <h2 className="text-6xl font-bold mb-16 text-center w-full relative">
+        <span
+          className="absolute top-12 left-[50%] transform -translate-x-[34%] w-52 h-5"
+          style={{ backgroundColor: "var(--custom-cyan)", zIndex: -1 }}
+        ></span>
         Contact
       </h2>
       <div className="flex flex-col items-center w-full">

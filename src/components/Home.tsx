@@ -44,22 +44,22 @@ const Home: React.FC = () => {
       }`}
     >
       <HomeAnimation /> {/* Three.js animation as background */}
-      <p className="text-center text-[var(--gray-text)] z-10">
+      <p className="text-2xl text-center text-[var(--gray-text)] z-10">
         Greetings! I am
       </p>
       <header>
-        <h1 className="text-6xl font-bold text-center z-10 mt-3">
+        <h1 className="text-8xl font-bold text-center z-10 mt-3">
           Miguel Lopez
         </h1>
       </header>
-      <p className="text-center text-[var(--gray-text)] z-10 mt-6">
+      <p className="text-2xl text-center text-[var(--gray-text)] z-10 mt-6">
         <strong className="text-white">{displayedText}</strong>
         <span className="blinking-cursor">|</span> seeking to{" "}
         <strong className="text-white">innovate</strong> and{" "}
         <strong className="text-white">redefine</strong>.
       </p>
       {/* Buttons */}
-      <div className="flex space-x-4 mt-25 z-10">
+      <div className="flex space-x-4 mt-16 z-10">
         <button
           className={`px-6 py-2 font-semibold rounded-lg shadow-md transition-all duration-300 ${
             showCV

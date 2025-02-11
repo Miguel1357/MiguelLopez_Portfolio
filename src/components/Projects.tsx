@@ -46,16 +46,13 @@ const Projects = () => {
       className="p-8 mt-60"
       style={{ paddingTop: "200px", marginTop: "60px" }}
     >
-      <h2 className="text-3xl font-bold mb-6 relative inline-block">
-        Projects
+      {/* Centered Title Above Both Sections */}
+      <h2 className="text-6xl font-bold mb-16 text-center w-full relative">
         <span
-          className="absolute top-7 left-7 w-27 h-2"
-          style={{
-            backgroundColor: "var(--custom-cyan)",
-            zIndex: -1, // Makes sure the rectangle stays behind the text
-            borderRadius: "0", // Sharp corners
-          }}
+          className="absolute top-12 left-[50%] transform -translate-x-[35%] w-54 h-5"
+          style={{ backgroundColor: "var(--custom-cyan)", zIndex: -1 }}
         ></span>
+        Projects
       </h2>
 
       <div className="relative bg-[var(--custom-gray)] p-6 rounded-lg shadow-lg max-w-[400px] mx-auto flex flex-col overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_var(--custom-cyan)] hover:ring-2 hover:ring-[var(--custom-cyan)] hover:ring-opacity-50 group before:absolute before:top-0 before:left-[-100%] before:w-full before:h-full before:bg-gradient-to-r before:from-transparent before:via-white/50 before:to-transparent before:rotate-[-20deg] before:translate-x-[-100%] before:transition-transform before:duration-500 hover:before:translate-x-[200%]">
