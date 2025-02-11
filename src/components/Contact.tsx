@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import Notification from "./Notification"; // Import notification component
+import React, { useState, useEffect } from "react";
 
 interface FormData {
   name: string;
@@ -20,43 +19,62 @@ const Contact: React.FC = () => {
     type: "success" | "error";
   } | null>(null);
 
+  // Fade out success message after 3 seconds
+  useEffect(() => {
+    if (notification?.type === "success") {
+      const timer = setTimeout(() => {
+        setNotification(null);
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [notification]);
+
+  const [errors, setErrors] = useState<{
+    name?: string;
+    email?: string;
+    message?: string;
+  }>({});
+
   // Handle input changes
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: "" })); // Reset error for field being edited
   };
 
   // Form submission
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); // Prevent default form submission behavior
+    e.preventDefault();
 
     const name = formData.name.trim();
     const email = formData.email.trim();
     const message = formData.message.trim();
 
+    // Reset errors first
+    const newErrors: { name?: string; email?: string; message?: string } = {};
+
     // If email is typed but invalid, prioritize email validation errors first
     if (email && !email.includes("@")) {
-      setNotification({
-        message: `Please include an '@' in the email address.`,
-        type: "error",
-      });
-      return;
+      newErrors.email = "Please include an '@' in the email address.";
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (email && !emailRegex.test(email)) {
-      setNotification({
-        message: `Invalid email format. Example: example@domain.com`,
-        type: "error",
-      });
-      return;
+      newErrors.email = "Invalid email format. Example: example@domain.com";
     }
 
     // General empty field check (only triggers if email is either valid or empty)
     if (!name || !email || !message) {
-      setNotification({ message: "All fields are required.", type: "error" });
+      if (!name) newErrors.name = "Name is required.";
+      if (!email) newErrors.email = "Email is required.";
+      if (!message) newErrors.message = "Message is required.";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
       return;
     }
 
@@ -103,10 +121,9 @@ const Contact: React.FC = () => {
   return (
     <section
       id="contact-section"
-      className="p-8 mt-60 pb-20 relative" // Added relative positioning
+      className="p-8 mt-60 pb-20 relative"
       style={{ paddingTop: "200px", marginTop: "60px" }}
     >
-      {/* Centered Title Above Both Sections */}
       <h2 className="text-6xl font-bold mb-16 text-center w-full relative">
         <span
           className="absolute top-12 left-[50%] transform -translate-x-[34%] w-52 h-5"
@@ -122,53 +139,70 @@ const Contact: React.FC = () => {
           </p>
         </div>
 
-        {notification && (
-          <Notification
-            message={notification.message}
-            type={notification.type}
-            onClose={() => setNotification(null)}
-          />
-        )}
-
         <form
           onSubmit={handleSubmit}
           noValidate
           className="mt-6 flex flex-col items-center w-full"
         >
-          <div className="mb-4 w-full flex justify-center">
+          {/* Name Field with Error */}
+          <div className="mb-6 w-full max-w-lg flex justify-center flex-col items-start">
             <input
               type="text"
               name="name"
               value={formData.name}
               onChange={handleInputChange}
               placeholder="Name"
-              className="w-full max-w-lg p-2 rounded bg-[var(--custom-gray)] text-white focus:outline-none focus:ring-2 focus:ring-[var(--custom-cyan)]"
+              className={`w-full p-2 rounded bg-[var(--custom-gray)] text-white focus:outline-none focus:ring-2 focus:ring-[var(--custom-cyan)] ${
+                errors.name ? "border-2 border-red-500" : ""
+              }`}
             />
+            {errors.name && (
+              <div className="text-red-500 text-sm mt-1 pl-2">
+                {errors.name}
+              </div>
+            )}
           </div>
 
-          <div className="mb-4 w-full flex justify-center">
+          {/* Email Field with Error */}
+          <div className="mb-6 w-full max-w-lg flex justify-center flex-col items-start">
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleInputChange}
               placeholder="Email"
-              className="w-full max-w-lg p-2 rounded bg-[var(--custom-gray)] text-white focus:outline-none focus:ring-2 focus:ring-[var(--custom-cyan)]"
+              className={`w-full p-2 rounded bg-[var(--custom-gray)] text-white focus:outline-none focus:ring-2 focus:ring-[var(--custom-cyan)] ${
+                errors.email ? "border-2 border-red-500" : ""
+              }`}
             />
+            {errors.email && (
+              <div className="text-red-500 text-sm mt-1 pl-2">
+                {errors.email}
+              </div>
+            )}
           </div>
 
-          <div className="mb-4 w-full flex justify-center">
+          {/* Message Field with Error */}
+          <div className="mb-6 w-full max-w-lg flex justify-center flex-col items-start">
             <textarea
               name="message"
               value={formData.message}
               onChange={handleInputChange}
               placeholder="Message"
-              className="w-full max-w-lg p-2 rounded bg-[var(--custom-gray)] text-white focus:outline-none focus:ring-2 focus:ring-[var(--custom-cyan)]"
+              className={`w-full p-2 rounded bg-[var(--custom-gray)] text-white focus:outline-none focus:ring-2 focus:ring-[var(--custom-cyan)] ${
+                errors.message ? "border-2 border-red-500" : ""
+              }`}
               rows={4}
             ></textarea>
+            {errors.message && (
+              <div className="text-red-500 text-sm mt-1 pl-2">
+                {errors.message}
+              </div>
+            )}
           </div>
 
-          <div className="flex justify-center w-full">
+          {/* Submit Button aligned to the right side of the input boxes */}
+          <div className="w-full max-w-lg flex justify-end">
             <button
               type="submit"
               disabled={isSubmitting}
@@ -180,6 +214,23 @@ const Contact: React.FC = () => {
             </button>
           </div>
         </form>
+
+        {/* Notification Message below the input fields, aligned to the left and directly to the left of the submit button */}
+        {notification && (
+          <div
+            className={`w-full max-w-lg flex justify-between items-center mt-4 transition-opacity duration-1000 ${
+              notification ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            <div
+              className={`${
+                notification.type === "error" ? "text-red-500" : "text-white"
+              } w-full`}
+            >
+              {notification.message}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
