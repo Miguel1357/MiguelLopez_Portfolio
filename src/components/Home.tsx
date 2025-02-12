@@ -60,7 +60,7 @@ const Home: React.FC = () => {
         <strong className="text-white">{displayedText}</strong>
         <span className="blinking-cursor">|</span> seeking to{" "}
         <strong className="text-white">innovate</strong> and{" "}
-        <strong className="text-white">redefine</strong>.
+        <strong className="text-white">redefine.</strong>
       </p>
       {/* Buttons */}
       <div className="flex space-x-4 mt-20 z-10">
