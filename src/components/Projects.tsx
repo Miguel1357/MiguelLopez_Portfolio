@@ -14,9 +14,10 @@ const Projects = () => {
   const manualScrollTimeoutRef = useRef<number | null>(null);
 
   const startAutoScroll = () => {
+    // Explicitly cast the return value to `number`
     autoScrollRef.current = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % images.length);
-    }, 3000);
+    }, 3000) as unknown as number; // Cast to `number`
   };
 
   const stopAutoScroll = () => {
@@ -31,7 +32,11 @@ const Projects = () => {
     if (manualScrollTimeoutRef.current !== null) {
       clearTimeout(manualScrollTimeoutRef.current);
     }
-    manualScrollTimeoutRef.current = window.setTimeout(startAutoScroll, 5000);
+    // Cast `setTimeout` return value to `number`
+    manualScrollTimeoutRef.current = window.setTimeout(
+      startAutoScroll,
+      5000
+    ) as unknown as number;
   };
 
   useEffect(() => {
