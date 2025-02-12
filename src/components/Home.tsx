@@ -14,7 +14,7 @@ const Home: React.FC = () => {
     // Trigger fade-in effect on mount
     setFadeIn(true);
 
-    let timeout: NodeJS.Timeout;
+    let timeout: ReturnType<typeof setTimeout>;
     const currentTitle = titles[currentTitleIndex];
     const textLength = displayedText.length;
 
