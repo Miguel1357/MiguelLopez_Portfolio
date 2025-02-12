@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
+import { useState } from "react";
 
 // Import skill icons
 import pythonIcon from "../assets/skill_icons/python.png";
@@ -31,34 +29,12 @@ const About = () => {
   const [hoverEffect, setHoverEffect] = useState<
     Record<string, { x: number; y: number }>
   >({});
-  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
-
-  const handleMouseMove = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    skillName: string // Explicitly define skillName as a string
-  ) => {
-    const { clientX, clientY, currentTarget } = e;
-    const { left, top, width, height } = currentTarget.getBoundingClientRect();
-
-    const x = -((clientX - left) / width - 0.5) * 300;
-    const y = -((clientY - top) / height - 0.5) * 300;
-
-    setHoverEffect((prev) => ({ ...prev, [skillName]: { x, y } }));
-  };
-
-  const handleMouseLeave = (skillName: string) => {
-    setHoverEffect((prev) => ({ ...prev, [skillName]: { x: 0, y: 0 } }));
-  };
 
   return (
-    <motion.section
+    <section
       id="about-section"
-      className="p-8 mt-60 flex flex-col items-center"
-      style={{ paddingTop: "200px", marginTop: "60px", minHeight: "100vh" }}
-      ref={ref}
-      initial={{ opacity: 0, y: 50 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="p-8 flex flex-col items-center"
+      style={{ minHeight: "auto", paddingTop: "100px", marginTop: "60px" }} // Change minHeight
     >
       <h2 className="text-6xl font-bold mb-16 text-center w-full relative">
         <span
@@ -69,12 +45,8 @@ const About = () => {
       </h2>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 w-full max-w-screen-xl mx-auto">
-        <motion.div
-          className="flex flex-col items-center text-center mx-auto lg:max-w-md"
-          initial={{ opacity: 0, y: 50 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
+        {/* About Section */}
+        <div className="flex flex-col items-center text-center mx-auto lg:max-w-md">
           <img
             src="MiguelJLopez.jpg"
             alt="Miguel Lopez"
@@ -101,14 +73,10 @@ const About = () => {
               let’s connect!
             </p>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          className="flex flex-col items-center justify-center mx-auto lg:max-w-md"
-          initial={{ opacity: 0, y: 50 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.4 }}
-        >
+        {/* Skills Section */}
+        <div className="flex flex-col items-center justify-center mx-auto lg:max-w-md">
           <div className="flex justify-center space-x-6">
             {[0, 3, 7].map((startIdx, columnIndex) => (
               <div
@@ -120,7 +88,7 @@ const About = () => {
                 {skills
                   .slice(startIdx, startIdx + (columnIndex === 1 ? 4 : 3))
                   .map((skill) => (
-                    <motion.div
+                    <div
                       key={skill.name}
                       className="flex flex-col items-center bg-[var(--custom-gray)] p-4 rounded-lg shadow-lg w-24 h-24 sm:w-28 sm:h-28 transition-transform"
                       style={{
@@ -130,17 +98,23 @@ const About = () => {
                             ? `0 0 10px 3px var(--custom-cyan), 0 0 15px 6px var(--custom-cyan)`
                             : "none",
                       }}
-                      onMouseMove={(e) => handleMouseMove(e, skill.name)}
-                      onMouseLeave={() => handleMouseLeave(skill.name)}
-                      animate={{
-                        x: hoverEffect[skill.name]?.x || 0,
-                        y: hoverEffect[skill.name]?.y || 0,
+                      onMouseMove={(e) => {
+                        const { clientX, clientY, currentTarget } = e;
+                        const { left, top, width, height } =
+                          currentTarget.getBoundingClientRect();
+                        const x = -((clientX - left) / width - 0.5) * 300;
+                        const y = -((clientY - top) / height - 0.5) * 300;
+                        setHoverEffect((prev) => ({
+                          ...prev,
+                          [skill.name]: { x, y },
+                        }));
                       }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 100,
-                        damping: 15,
-                      }}
+                      onMouseLeave={() =>
+                        setHoverEffect((prev) => ({
+                          ...prev,
+                          [skill.name]: { x: 0, y: 0 },
+                        }))
+                      }
                     >
                       <img
                         src={skill.icon}
@@ -148,14 +122,14 @@ const About = () => {
                         className="w-12 h-12"
                       />
                       <p className="text-white text-sm mt-2">{skill.name}</p>
-                    </motion.div>
+                    </div>
                   ))}
               </div>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
-    </motion.section>
+    </section>
   );
 };
 

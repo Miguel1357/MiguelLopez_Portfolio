@@ -20,14 +20,14 @@ function App() {
       <div className="relative">
         <Navbar />
         {/* FadeIn sections */}
-        <FadeIn fadeInThreshold={0.7} fadeOutThreshold={0.7} fadeDuration={0.6}>
+        <FadeIn fadeInThreshold={0.5} fadeOutThreshold={0.5} fadeDuration={0.5}>
           <About />
         </FadeIn>
         <GeneralAnimation className="general-animation-container" />{" "}
-        <FadeIn fadeInThreshold={0.5} fadeOutThreshold={0.7} fadeDuration={0.5}>
+        <FadeIn fadeInThreshold={0.5} fadeOutThreshold={0.5} fadeDuration={0.5}>
           <Projects />
         </FadeIn>
-        <FadeIn fadeInThreshold={0.5} fadeOutThreshold={0.7} fadeDuration={0.5}>
+        <FadeIn fadeInThreshold={0.5} fadeOutThreshold={0.5} fadeDuration={0.5}>
           <Contact />
         </FadeIn>
       </div>
