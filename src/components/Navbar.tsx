@@ -46,7 +46,9 @@ const Navbar: React.FC = () => {
     <nav
       id="navbar"
       className={`w-full bg-[#1a1a1a] text-white py-4 px-6 font-semibold text-lg transition-opacity duration-300 rounded-b-2xl ${
-        isVisible ? "opacity-100" : "opacity-0"
+        isVisible
+          ? "opacity-100 pointer-events-auto"
+          : "opacity-0 pointer-events-none"
       } fixed top-0 left-0 z-50`}
     >
       <div className="flex items-center justify-between w-full">
