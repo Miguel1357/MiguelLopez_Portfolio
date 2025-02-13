@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import HomeAnimation from "../animations/HomeAnimation"; // Import the animation
+import HomeAnimation from "../animations/HomeAnimation";
 
 const titles = ["Software Engineer", "Web Dev", "App Dev", "Game Dev"];
 
@@ -8,10 +8,9 @@ const Home: React.FC = () => {
   const [currentTitleIndex, setCurrentTitleIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState("");
   const [typing, setTyping] = useState(true);
-  const [fadeIn, setFadeIn] = useState(false); // State for fade-in effect
+  const [fadeIn, setFadeIn] = useState(false);
 
   useEffect(() => {
-    // Trigger fade-in effect on mount
     setFadeIn(true);
 
     let timeout: ReturnType<typeof setTimeout>;
@@ -43,11 +42,11 @@ const Home: React.FC = () => {
   return (
     <section
       id="home-section"
-      className={`relative min-h-screen flex flex-col justify-center items-center text-white overflow-hidden transition-opacity duration-1000 ${
+      className={`relative min-h-screen flex flex-col justify-center items-center overflow-hidden transition-opacity duration-1000 ${
         fadeIn ? "opacity-100" : "opacity-0"
       }`}
     >
-      <HomeAnimation /> {/* Three.js animation as background */}
+      <HomeAnimation />
       <p className="text-center text-[var(--gray-text)] z-10">
         Greetings! I am
       </p>
@@ -62,12 +61,11 @@ const Home: React.FC = () => {
         <strong className="text-white">innovate</strong> and{" "}
         <strong className="text-white">redefine.</strong>
       </p>
-      {/* Buttons */}
       <div className="flex space-x-4 mt-20 z-10">
         <button
           className={`px-6 py-2 font-semibold rounded-lg shadow-md transition-all duration-300 ${
             showCV
-              ? "bg-red-500 text-white hover:bg-red-600 hover:text-gray-200"
+              ? "bg-red-500 hover:bg-red-600 hover:text-gray-200"
               : "bg-white text-[var(--custom-cyan)] hover:bg-[var(--hover-white)] hover:text-[var(--hover-cyan)]"
           }`}
           onClick={() => setShowCV((prev) => !prev)}
@@ -76,7 +74,7 @@ const Home: React.FC = () => {
         </button>
 
         <button
-          className="px-6 py-2 bg-[var(--custom-cyan)] text-white font-semibold rounded-lg shadow-md hover:bg-[var(--hover-cyan)] transition-all duration-300"
+          className="px-6 py-2 bg-[var(--custom-cyan)] font-semibold rounded-lg shadow-md hover:bg-[var(--hover-cyan)] transition-all duration-300"
           onClick={() => {
             const contactSection = document.getElementById("contact-section");
             if (contactSection) {
@@ -87,7 +85,6 @@ const Home: React.FC = () => {
           Contact Me
         </button>
       </div>
-      {/* Download CV Button */}
       {showCV && (
         <div className="mt-4 z-10">
           <a
@@ -99,6 +96,7 @@ const Home: React.FC = () => {
           </a>
         </div>
       )}
+
       {/* CV Section */}
       <div
         className={`w-full max-w-3xl overflow-hidden transition-all duration-500 flex-grow ${
@@ -107,24 +105,22 @@ const Home: React.FC = () => {
             : "max-h-0 opacity-0"
         }`}
       >
+        {/* PDF Viewer */}
         <div className="w-full rounded-lg min-h-[600px] max-h-[90vh] overflow-auto">
-          {/* PDF Viewer */}
-          <div className="w-full overflow-hidden">
-            <iframe
-              src="./MiguelJLopez_Resume.pdf"
-              className="border-none w-full min-h-[600px] h-[calc(90vh-4rem)]"
-              title="Resume"
-            />
-          </div>
+          <iframe
+            src="./MiguelJLopez_Resume.pdf"
+            className="border-none w-full min-h-[600px] h-[calc(90vh-4rem)]"
+            title="Resume"
+          />
         </div>
       </div>
-      {/* LinkedIn & GitHub Buttons */}
+
       <div className="flex space-x-4 mt-6 z-10">
         <a
           href="https://www.linkedin.com/in/migueljlopez02/"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center w-16 h-16 border-2 border-white text-white font-bold text-2xl lowercase transition-all duration-300 hover:bg-white hover:text-black"
+          className="flex items-center justify-center w-16 h-16 border-2 border-white font-bold text-2xl lowercase transition-all duration-300 hover:bg-white hover:text-black"
         >
           in
         </a>
@@ -133,11 +129,12 @@ const Home: React.FC = () => {
           href="https://github.com/Miguel1357"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center w-16 h-16 border-2 border-white text-white font-bold text-2xl lowercase transition-all duration-300 hover:bg-white hover:text-black"
+          className="flex items-center justify-center w-16 h-16 border-2 border-white font-bold text-2xl lowercase transition-all duration-300 hover:bg-white hover:text-black"
         >
           git
         </a>
       </div>
+
       {/* Typing Animation Styling */}
       <style>
         {`

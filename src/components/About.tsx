@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-// Import skill icons
 import pythonIcon from "../assets/skill_icons/python.png";
 import javaIcon from "../assets/skill_icons/java.png";
 import typescriptIcon from "../assets/skill_icons/typescript.png";
@@ -26,6 +25,7 @@ const skills = [
 ];
 
 const About = () => {
+  // State to handle hover effects for skills' icons
   const [hoverEffect, setHoverEffect] = useState<
     Record<string, { x: number; y: number }>
   >({});
@@ -34,7 +34,7 @@ const About = () => {
     <section
       id="about-section"
       className="p-8 flex flex-col items-center"
-      style={{ minHeight: "auto", paddingTop: "100px", marginTop: "60px" }} // Change minHeight
+      style={{ minHeight: "auto", paddingTop: "100px", marginTop: "60px" }}
     >
       <h2 className="text-6xl font-bold mb-16 text-center w-full relative">
         <span
@@ -75,8 +75,8 @@ const About = () => {
           </div>
         </div>
 
-        {/* Skills Section */}
         <div className="flex flex-col items-center justify-center mx-auto lg:max-w-md">
+          {/* Skills Section */}
           <div className="flex justify-center space-x-6">
             {[0, 3, 7].map((startIdx, columnIndex) => (
               <div
@@ -97,13 +97,17 @@ const About = () => {
                           hoverEffect[skill.name]?.y
                             ? `0 0 10px 3px var(--custom-cyan), 0 0 15px 6px var(--custom-cyan)`
                             : "none",
+                        transform: `translate(${
+                          hoverEffect[skill.name]?.x || 0
+                        }px, ${hoverEffect[skill.name]?.y || 0}px)`, // Move the box
+                        transition: "transform 0.2s ease-out", // Smooth movement
                       }}
                       onMouseMove={(e) => {
                         const { clientX, clientY, currentTarget } = e;
                         const { left, top, width, height } =
                           currentTarget.getBoundingClientRect();
-                        const x = -((clientX - left) / width - 0.5) * 300;
-                        const y = -((clientY - top) / height - 0.5) * 300;
+                        const x = -((clientX - left) / width - 0.5) * 20;
+                        const y = -((clientY - top) / height - 0.5) * 20;
                         setHoverEffect((prev) => ({
                           ...prev,
                           [skill.name]: { x, y },
@@ -112,7 +116,7 @@ const About = () => {
                       onMouseLeave={() =>
                         setHoverEffect((prev) => ({
                           ...prev,
-                          [skill.name]: { x: 0, y: 0 },
+                          [skill.name]: { x: 0, y: 0 }, // Reset position on hover leave
                         }))
                       }
                     >
@@ -121,7 +125,7 @@ const About = () => {
                         alt={skill.name}
                         className="w-12 h-12"
                       />
-                      <p className="text-white text-sm mt-2">{skill.name}</p>
+                      <p className="text-sm mt-2">{skill.name}</p>
                     </div>
                   ))}
               </div>

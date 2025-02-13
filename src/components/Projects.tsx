@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 
-// Project Images (replace with actual imports)
 import image1 from "../assets/project_images/camel1.png";
 import image2 from "../assets/project_images/camel2.png";
 import image3 from "../assets/project_images/camel3.png";
@@ -14,10 +13,9 @@ const Projects = () => {
   const manualScrollTimeoutRef = useRef<number | null>(null);
 
   const startAutoScroll = () => {
-    // Explicitly cast the return value to `number`
     autoScrollRef.current = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % images.length);
-    }, 3000) as unknown as number; // Cast to `number`
+    }, 3000) as unknown as number;
   };
 
   const stopAutoScroll = () => {
@@ -32,7 +30,6 @@ const Projects = () => {
     if (manualScrollTimeoutRef.current !== null) {
       clearTimeout(manualScrollTimeoutRef.current);
     }
-    // Cast `setTimeout` return value to `number`
     manualScrollTimeoutRef.current = window.setTimeout(
       startAutoScroll,
       5000
@@ -51,15 +48,16 @@ const Projects = () => {
         Projects
       </h2>
 
+      {/* Project card with glow and shine hover effects */}
       <div
         className="relative bg-[var(--custom-gray)] p-6 rounded-lg shadow-lg w-full max-w-[400px] sm:max-w-[500px] md:max-w-[600px] mx-auto flex flex-col overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_var(--custom-cyan)] hover:ring-2 hover:ring-[var(--custom-cyan)] hover:ring-opacity-50 group 
       before:absolute before:top-0 before:left-[-100%] before:w-full before:h-full before:bg-gradient-to-r before:from-transparent before:via-white/50 before:to-transparent before:rotate-[-20deg] before:translate-x-[-100%] before:transition-transform before:duration-500 hover:before:translate-x-[200%]"
       >
-        <h3 className="text-3xl font-bold text-white">CAMEL</h3>
+        <h3 className="text-3xl font-bold">CAMEL</h3>
 
         <div className="relative mt-4 w-full aspect-[4/3] overflow-hidden">
           <div className="relative w-full h-full flex items-center justify-between">
-            {/* Left Arrow */}
+            {/* Previous image button */}
             <button
               onClick={() => {
                 setCurrentImage(
@@ -67,12 +65,11 @@ const Projects = () => {
                 );
                 resetAutoScroll();
               }}
-              className="absolute left-2 text-white text-3xl z-10 bg-[rgba(0,0,0,0.5)] hover:bg-[rgba(0,0,0,0.7)] rounded-full p-2 transition-all duration-300 shadow-md"
+              className="absolute left-2 text-3xl z-10 bg-[rgba(0,0,0,0.5)] hover:bg-[rgba(0,0,0,0.7)] rounded-full p-2 transition-all duration-300 shadow-md"
             >
               &lt;
             </button>
 
-            {/* Image Carousel */}
             <div
               className="flex w-full h-full transition-transform duration-500 ease-in-out"
               style={{ transform: `translateX(-${currentImage * 100}%)` }}
@@ -87,25 +84,25 @@ const Projects = () => {
               ))}
             </div>
 
-            {/* Right Arrow */}
+            {/* Next image button */}
             <button
               onClick={() => {
                 setCurrentImage((prev) => (prev + 1) % images.length);
                 resetAutoScroll();
               }}
-              className="absolute right-2 text-white text-3xl z-10 bg-[rgba(0,0,0,0.5)] hover:bg-[rgba(0,0,0,0.7)] rounded-full p-2 transition-all duration-300 shadow-md"
+              className="absolute right-2 text-3xl z-10 bg-[rgba(0,0,0,0.5)] hover:bg-[rgba(0,0,0,0.7)] rounded-full p-2 transition-all duration-300 shadow-md"
             >
               &gt;
             </button>
           </div>
-          <span className="absolute bottom-2 left-2 bg-[var(--custom-cyan)] text-white px-3 py-1 text-xs font-bold rounded">
+          <span className="absolute bottom-2 left-2 bg-[var(--custom-cyan)] px-3 py-1 text-xs font-bold rounded">
             AUG, 2023
           </span>
         </div>
 
-        <div className="mt-4 text-white">
+        <div className="mt-4">
           <p className="text-sm mt-2">
-            <span className="block font-semibold mb-1 text-white">
+            <span className="block font-semibold mb-1">
               [Project Management Website]
             </span>
             An efficient SaaS platform for Project Managers to streamline
@@ -139,7 +136,7 @@ const Projects = () => {
               href="https://github.com/SacOverflow/CAMEL-Services"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-2 bg-[var(--custom-cyan)] text-white font-semibold rounded-lg shadow-md hover:bg-[var(--hover-cyan)] transition-all duration-300"
+              className="px-6 py-2 bg-[var(--custom-cyan)] font-semibold rounded-lg shadow-md hover:bg-[var(--hover-cyan)] transition-all duration-300"
             >
               Learn More
             </a>

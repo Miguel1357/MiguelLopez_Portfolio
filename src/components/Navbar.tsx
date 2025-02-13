@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 
 const Navbar: React.FC = () => {
+  // State to control navbar visibility based on scroll position
   const [isVisible, setIsVisible] = useState<boolean>(false);
+  // State to track the currently active section based on scroll position
   const [activeSection, setActiveSection] = useState<string>("home");
 
   useEffect(() => {
@@ -45,14 +47,13 @@ const Navbar: React.FC = () => {
   return (
     <nav
       id="navbar"
-      className={`w-full bg-[#1a1a1a] text-white py-4 px-6 font-semibold text-lg transition-opacity duration-300 rounded-b-2xl ${
+      className={`w-full bg-[#1a1a1a] py-4 px-6 font-semibold text-lg transition-opacity duration-300 rounded-b-2xl ${
         isVisible
           ? "opacity-100 pointer-events-auto"
           : "opacity-0 pointer-events-none"
       } fixed top-0 left-0 z-50`}
     >
       <div className="flex items-center justify-between w-full">
-        {/* Left Side - Section Buttons */}
         <ul className="flex space-x-3">
           {["home", "about", "projects", "contact"].map((section) => (
             <li key={section}>
@@ -60,7 +61,7 @@ const Navbar: React.FC = () => {
                 onClick={() => scrollToSection(`${section}-section`)}
                 className={`px-3 py-2 rounded-md transition-colors duration-200 ${
                   activeSection === section
-                    ? "bg-[var(--custom-cyan)] text-white"
+                    ? "bg-[var(--custom-cyan)]"
                     : "text-white"
                 } hover:bg-[var(--hover-cyan)]`}
               >

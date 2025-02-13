@@ -5,4 +5,7 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   base: "/MiguelLopez_Portfolio/",
   plugins: [react(), tailwindcss()],
+  build: {
+    chunkSizeWarningLimit: 1200,
+  },
 });

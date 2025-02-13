@@ -2,10 +2,12 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { useRef, useMemo } from "react";
 import * as THREE from "three";
 
+// ParticleWave component creates a dynamic wave effect with 3D particles (spheres)
 const ParticleWave = () => {
   const mesh = useRef<THREE.Group | null>(null);
   const particleCount = 200;
 
+  // useMemo to create and store particle objects to avoid re-calculating them on every render
   const particles = useMemo(() => {
     const particleObjects = [];
     for (let i = 0; i < particleCount; i++) {
@@ -30,6 +32,7 @@ const ParticleWave = () => {
     return particleObjects;
   }, []);
 
+  // useFrame hook updates each frame (animation loop) to animate the particle movement
   useFrame(({ clock }) => {
     const time = clock.getElapsedTime();
     if (mesh.current) {
@@ -56,12 +59,12 @@ const HomeAnimation = () => {
       <Canvas
         camera={{ position: [0, 1, 5] }}
         style={{
-          position: "absolute", // Ensures the animation stays in place
+          position: "absolute",
           top: 0,
           left: 0,
-          width: "100vw", // Full width
-          height: "100vh", // Full height
-          zIndex: -1, // Place the animation behind content
+          width: "100vw",
+          height: "100vh",
+          zIndex: -1,
         }}
       >
         <ambientLight intensity={0.3} />

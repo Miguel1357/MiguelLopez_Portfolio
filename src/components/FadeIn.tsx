@@ -23,7 +23,6 @@ const FadeIn: React.FC<FadeInProps> = ({
     fadeInThreshold,
   ]);
 
-  // Adjust the threshold based on screen size
   useEffect(() => {
     const handleResize = () => {
       const height = window.innerHeight;
@@ -32,12 +31,13 @@ const FadeIn: React.FC<FadeInProps> = ({
       );
     };
 
-    handleResize(); // Run once on mount
+    handleResize();
     window.addEventListener("resize", handleResize);
 
     return () => window.removeEventListener("resize", handleResize);
   }, [fadeInThreshold, fadeOutThreshold]);
 
+  // useInView hook from 'react-intersection-observer' to trigger animations when the element is in view
   const { ref, inView } = useInView({
     threshold,
     triggerOnce: false,
