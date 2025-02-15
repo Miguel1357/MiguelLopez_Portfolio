@@ -16,7 +16,7 @@ function App() {
       <Home />
       <div className="relative">
         <Navbar />
-        <FadeIn fadeInThreshold={0.5} fadeOutThreshold={0.5} fadeDuration={0.5}>
+        <FadeIn fadeInThreshold={0.3} fadeOutThreshold={0.3} fadeDuration={0.5}>
           <About />
         </FadeIn>
         <GeneralAnimation className="general-animation-container" />{" "}

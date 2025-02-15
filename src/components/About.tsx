@@ -36,6 +36,17 @@ const About = () => {
       className="p-8 flex flex-col items-center"
       style={{ minHeight: "auto", paddingTop: "100px", marginTop: "60px" }}
     >
+      <div className="w-full flex justify-center mb-12">
+        <button
+          className="nav-button animate-fade"
+          onClick={() => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+        >
+          <span className="text-2xl mb-1">&#x25B2;</span> {/* Upward arrow */}
+          Home
+        </button>
+      </div>
       <h2 className="text-6xl font-bold mb-16 text-center w-full relative">
         <span
           className="absolute top-12 left-[50%] transform -translate-x-[28%] w-40 h-5"
@@ -57,18 +68,18 @@ const About = () => {
             Computer Science Graduate
           </h4>
           <div className="space-y-6 max-w-2xl mx-auto">
-            <p className="px-16 text-left">
+            <p className="px-20 text-left">
               Hi, I’m Miguel Lopez, a recent Computer Science graduate from
               California State University, Sacramento. I’m fascinated by
               technology and enjoy finding creative ways to improve or reinvent
               ideas.
             </p>
-            <p className="px-16 text-left">
+            <p className="px-20 text-left">
               I focus on creating meaningful innovations while appreciating the
               value of small improvements that meet niche needs and make a
               lasting impact.
             </p>
-            <p className="mb-15 px-16 text-left">
+            <p className="mb-15 px-20 text-left">
               If you’re looking for someone to help bring your vision to life,
               let’s connect!
             </p>
@@ -90,7 +101,7 @@ const About = () => {
                   .map((skill) => (
                     <div
                       key={skill.name}
-                      className="flex flex-col items-center bg-[var(--custom-gray)] p-4 rounded-lg shadow-lg w-24 h-24 sm:w-28 sm:h-28 transition-transform"
+                      className="flex flex-col items-center bg-[var(--custom-gray)] p-4 rounded-lg shadow-lg w-24 h-24 sm:w-28 sm:h-28 transition-transform hover:border-[var(--custom-cyan)] border-2 border-transparent"
                       style={{
                         boxShadow:
                           hoverEffect[skill.name]?.x ||
@@ -99,8 +110,8 @@ const About = () => {
                             : "none",
                         transform: `translate(${
                           hoverEffect[skill.name]?.x || 0
-                        }px, ${hoverEffect[skill.name]?.y || 0}px)`, // Move the box
-                        transition: "transform 0.2s ease-out", // Smooth movement
+                        }px, ${hoverEffect[skill.name]?.y || 0}px)`, // Moves the box
+                        transition: "transform 0.2s ease-out",
                       }}
                       onMouseMove={(e) => {
                         const { clientX, clientY, currentTarget } = e;
@@ -132,6 +143,20 @@ const About = () => {
             ))}
           </div>
         </div>
+      </div>
+      <div className="w-full flex justify-center mt-12">
+        <button
+          className="nav-button animate-fade"
+          onClick={() => {
+            const projectsSection = document.getElementById("projects-section");
+            if (projectsSection) {
+              projectsSection.scrollIntoView({ behavior: "smooth" });
+            }
+          }}
+        >
+          Projects
+          <span className="text-2xl mt-1">&#x25BC;</span> {/* Downward arrow */}
+        </button>
       </div>
     </section>
   );

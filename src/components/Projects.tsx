@@ -42,7 +42,24 @@ const Projects = () => {
   }, []);
 
   return (
-    <section id="projects-section" className="p-8 mt-60">
+    <section
+      id="projects-section"
+      className="p-8 mt-60 pt-[calc(var(--navbar-height)+40px)]"
+    >
+      <div className="w-full flex justify-center mb-12">
+        <button
+          className="nav-button animate-fade"
+          onClick={() => {
+            const aboutSection = document.getElementById("about-section");
+            if (aboutSection) {
+              aboutSection.scrollIntoView({ behavior: "smooth" });
+            }
+          }}
+        >
+          <span className="text-2xl mb-1">&#x25B2;</span> {/* Upward arrow */}
+          About
+        </button>
+      </div>
       <h2 className="text-6xl font-bold mb-16 text-center w-full relative">
         <span className="absolute top-12 left-[50%] transform -translate-x-[35%] w-54 h-5 bg-[var(--custom-cyan)] z-[-1]"></span>
         Projects
@@ -142,6 +159,20 @@ const Projects = () => {
             </a>
           </div>
         </div>
+      </div>
+      <div className="w-full flex justify-center mt-12">
+        <button
+          className="nav-button animate-fade"
+          onClick={() => {
+            const contactSection = document.getElementById("contact-section");
+            if (contactSection) {
+              contactSection.scrollIntoView({ behavior: "smooth" });
+            }
+          }}
+        >
+          Contact
+          <span className="text-2xl mt-1">&#x25BC;</span> {/* Downward arrow */}
+        </button>
       </div>
     </section>
   );

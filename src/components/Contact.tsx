@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import Notification from "./Notification";
 
 interface FormData {
   name: string;
@@ -14,21 +15,7 @@ const Contact: React.FC = () => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const [notification, setNotification] = useState<{
-    message: string;
-    type: "success" | "error";
-  } | null>(null);
-
-  useEffect(() => {
-    if (notification?.type === "success") {
-      const timer = setTimeout(() => {
-        setNotification(null);
-      }, 3000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [notification]);
-
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errors, setErrors] = useState<{
     name?: string;
     email?: string;
@@ -94,19 +81,11 @@ const Contact: React.FC = () => {
       );
 
       if (response.ok) {
-        setNotification({
-          message: "Message sent successfully!",
-          type: "success",
-        });
+        setSuccessMessage("Message sent successfully!");
         setFormData({ name: "", email: "", message: "" });
-      } else {
-        setNotification({
-          message: "Something went wrong, please try again.",
-          type: "error",
-        });
       }
     } catch (error) {
-      setNotification({ message: "Error sending message.", type: "error" });
+      console.error("Error sending message.");
     } finally {
       setIsSubmitting(false);
     }
@@ -118,6 +97,20 @@ const Contact: React.FC = () => {
       className="p-8 mt-60 pb-20 relative"
       style={{ paddingTop: "200px", marginTop: "60px" }}
     >
+      <div className="w-full flex justify-center mb-12">
+        <button
+          className="nav-button animate-fade"
+          onClick={() => {
+            const projectsSection = document.getElementById("projects-section");
+            if (projectsSection) {
+              projectsSection.scrollIntoView({ behavior: "smooth" });
+            }
+          }}
+        >
+          <span className="text-2xl mb-1">&#x25B2;</span> {/* Upward arrow */}
+          Projects
+        </button>
+      </div>
       <h2 className="text-6xl font-bold mb-16 text-center w-full relative">
         <span
           className="absolute top-12 left-[50%] transform -translate-x-[34%] w-52 h-5"
@@ -132,7 +125,6 @@ const Contact: React.FC = () => {
             back to you as soon as possible!
           </p>
         </div>
-
         <form
           onSubmit={handleSubmit}
           noValidate
@@ -145,7 +137,7 @@ const Contact: React.FC = () => {
               value={formData.name}
               onChange={handleInputChange}
               placeholder="Name"
-              className={`w-full p-2 rounded bg-[var(--custom-gray)] focus:outline-none focus:ring-2 focus:ring-[var(--custom-cyan)] ${
+              className={`w-full p-2 rounded bg-[var(--custom-gray)] focus:outline-none focus:ring-2 focus:ring-[var(--custom-cyan)] focus:shadow-[0_0_10px_cyan] transition-shadow ${
                 errors.name ? "border-2 border-red-500" : ""
               }`}
             />
@@ -163,7 +155,7 @@ const Contact: React.FC = () => {
               value={formData.email}
               onChange={handleInputChange}
               placeholder="Email"
-              className={`w-full p-2 rounded bg-[var(--custom-gray)] focus:outline-none focus:ring-2 focus:ring-[var(--custom-cyan)] ${
+              className={`w-full p-2 rounded bg-[var(--custom-gray)] focus:outline-none focus:ring-2 focus:ring-[var(--custom-cyan)] focus:shadow-[0_0_10px_cyan] transition-shadow ${
                 errors.email ? "border-2 border-red-500" : ""
               }`}
             />
@@ -180,7 +172,7 @@ const Contact: React.FC = () => {
               value={formData.message}
               onChange={handleInputChange}
               placeholder="Message"
-              className={`w-full p-2 rounded bg-[var(--custom-gray)] focus:outline-none focus:ring-2 focus:ring-[var(--custom-cyan)] ${
+              className={`w-full p-2 rounded bg-[var(--custom-gray)] focus:outline-none focus:ring-2 focus:ring-[var(--custom-cyan)] focus:shadow-[0_0_10px_cyan] transition-shadow ${
                 errors.message ? "border-2 border-red-500" : ""
               }`}
               rows={4}
@@ -191,35 +183,27 @@ const Contact: React.FC = () => {
               </div>
             )}
           </div>
-
-          <div className="w-full max-w-lg flex justify-end">
+          <div className="w-full max-w-lg flex flex-col items-end relative">
             <button
               type="submit"
               disabled={isSubmitting}
-              className={`mt-4 p-2 px-6 bg-[var(--custom-cyan)] font-semibold rounded-lg hover:bg-[var(--hover-cyan)] transition-colors ${
+              className={`p-2 px-6 bg-[var(--custom-cyan)] font-semibold rounded-lg hover:bg-[var(--hover-cyan)] transition-colors ${
                 isSubmitting ? "opacity-50 cursor-not-allowed" : ""
               }`}
             >
               {isSubmitting ? "Submitting..." : "Submit"}
             </button>
+
+            {successMessage && (
+              <div className="relative w-full flex justify-end">
+                <Notification
+                  message={successMessage}
+                  onClose={() => setSuccessMessage(null)}
+                />
+              </div>
+            )}
           </div>
         </form>
-
-        {notification && (
-          <div
-            className={`w-full max-w-lg flex justify-between items-center mt-4 transition-opacity duration-1000 ${
-              notification ? "opacity-100" : "opacity-0"
-            }`}
-          >
-            <div
-              className={`${
-                notification.type === "error" ? "text-red-500" : "text-white"
-              } w-full`}
-            >
-              {notification.message}
-            </div>
-          </div>
-        )}
       </div>
     </section>
   );

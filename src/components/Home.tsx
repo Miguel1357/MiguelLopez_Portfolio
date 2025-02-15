@@ -135,6 +135,21 @@ const Home: React.FC = () => {
         </a>
       </div>
 
+      <div className="absolute bottom-6 flex flex-col items-center z-10">
+        <button
+          className="nav-button animate-fade"
+          onClick={() => {
+            const aboutSection = document.getElementById("about-section");
+            if (aboutSection) {
+              aboutSection.scrollIntoView({ behavior: "smooth" });
+            }
+          }}
+        >
+          About
+          <span className="text-2xl mt-1">&#x25BC;</span> {/* Downward arrow */}
+        </button>
+      </div>
+
       {/* Typing Animation Styling */}
       <style>
         {`
